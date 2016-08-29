@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <declare-styleable name="NoteView">
+        <attr name="from_color" format="color" />
+        <attr name="to_color" format="color" />
+        <attr name="text" format="string" />
+        <attr name="text_size" format="dimension" />
+        <attr name="text_color" format="color" />
+        <attr name="duration" format="integer" />
+    </declare-styleable>
+
+    <!--水波纹自定义控件-->
+    <declare-styleable name="RippleBackground">
+        <attr name="rb_color" format="color" />
+        <attr name="rb_strokeWidth" format="dimension" />
+        <attr name="rb_radius" format="dimension" />
+        <attr name="rb_duration" format="integer" />
+        <attr name="rb_rippleAmount" format="integer" />
+        <attr name="rb_scale" format="float" />
+        <attr name="rb_type" format="enum">
+            <enum name="fillRipple" value="0" />
+            <enum name="strokeRipple" value="1" />
+        </attr>
+    </declare-styleable>
+
+    <!--消息布局-->
+    <declare-styleable name="MessageView">
+        <attr name="round_color" format="color" />
+        <attr name="message_text" format="string" />
+        <attr name="message_size" format="dimension" />
+        <attr name="message_color" format="color" />
+    </declare-styleable>
+
+
+</resources>

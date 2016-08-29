@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
+    <color name="transparent">#00ffffff</color>
+
+
+    <!--自定义控件-->
+    <color name="rippelColor">#0099CC</color>
+
+
+    <!--床位绑定-->
+    <color name="office_check">#646566</color>
+    <color name="choose_title">#959fAB</color>
+    <color name="choose_bg">#1e2430</color>
+    <color name="choose_bed">#00affe</color>
+
+    <!--主页-->
+    <color name="name_text_female">#fda2dd</color>
+    <color name="name_text_male">#00affe</color>
+    <color name="history_text">#fff778</color>
+    <color name="note_text">#1d2530</color>
+
+
+    <!--详细-->
+    <color name="detail_bg">#2c3848</color>
+    <color name="food_text">#00b1ff</color>
+    <color name="second_level">#ff3a53</color>
+
+
+</resources>

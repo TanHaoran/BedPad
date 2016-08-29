@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">BedPad</string>
+
+
+    <!--床位绑定-->
+    <string name="choose_office">请选择科室</string>
+    <string name="choose_bed">选择床位绑定到平板</string>
+    <string name="ok">确定</string>
+
+    <!--主页-->
+    <string name="name">姓名：</string>
+    <string name="age">年龄：</string>
+    <string name="in_date">入院日期：</string>
+    <string name="hos_id">住院号：</string>
+    <string name="history">过敏史：</string>
+    <string name="doctor">主管医生：</string>
+    <string name="nurse">责任护士：</string>
+
+    <!--详细-->
+    <string name="sex">性别：</string>
+    <string name="diagnosis">诊断：</string>
+    <string name="level">护理级别：</string>
+    <string name="food">饮食：</string>
+
+    <string name="temperature">体温检测</string>
+    <string name="drip">静滴监控</string>
+
+
+</resources>

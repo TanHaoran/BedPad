@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/choose_bg"
+    android:orientation="vertical"
+    android:padding="5dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="110dp"
+        android:background="#2c3848"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp">
+
+        <TextView
+            android:id="@+id/tv_hospital"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="交大一附院"
+            android:textColor="@color/choose_title"
+            android:textSize="@dimen/hospital_text" />
+
+        <TextView
+            android:id="@+id/tv_hyphens"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/tv_hospital"
+            android:text=" - "
+            android:textColor="@color/choose_title"
+            android:textSize="@dimen/hospital_text" />
+
+        <TextView
+            android:id="@+id/tv_office"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/tv_hyphens"
+            android:text="心里内科"
+            android:textColor="@color/choose_title"
+            android:textSize="@dimen/hospital_text" />
+
+
+        <TextView
+            android:id="@+id/tv_bed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="20dp"
+            android:text="床"
+            android:textColor="@color/choose_title"
+            android:textSize="@dimen/patient_info_text" />
+
+        <TextView
+            android:id="@+id/tv_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:layout_toLeftOf="@id/tv_bed"
+            android:text=""
+            android:textColor="@color/white"
+            android:textSize="70sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="20dp">
+
+        <LinearLayout
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/patient_info_line_height"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/name"
+                    android:textColor="@color/choose_title"
+                    android:textSize="@dimen/patient_info_text" />
+
+                <TextView
+                    android:id="@+id/tv_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textColor="@color/name_text_female"
+                    android:textSize="@dimen/patient_info_name_text" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/patient_info_line_height"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/age"
+                    android:textColor="@color/choose_title"
+                    android:textSize="@dimen/patient_info_text" />
+
+                <TextView
+                    android:id="@+id/tv_age"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textColor="@color/choose_title"
+                    android:textSize="@dimen/patient_info_text" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/patient_info_line_height"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/in_date"
+                    android:textColor="@color/choose_title"
+                    android:textSize="@dimen/patient_info_text" />
+
+                <TextView
+                    android:id="@+id/tv_in_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textColor="@color/choose_title"
+                    android:textSize="@dimen/patient_info_text" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/patient_info_line_height"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/hos_id"
+                    android:textColor="@color/choose_title"
+                    android:textSize="@dimen/patient_info_text" />
+
+                <TextView
+                    android:id="@+id/tv_hos_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textColor="@color/choose_title"
+                    android:textSize="@dimen/patient_info_text" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/patient_info_line_height"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/history"
+                    android:textColor="@color/choose_title"
+                    android:textSize="@dimen/patient_info_text" />
+
+                <TextView
+
+                    android:id="@+id/tv_history"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textColor="@color/history_text"
+                    android:textSize="@dimen/patient_info_text" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/patient_info_line_height"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/doctor"
+                    android:textColor="@color/choose_title"
+                    android:textSize="@dimen/patient_info_text" />
+
+                <TextView
+                    android:id="@+id/tv_doctor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textColor="@color/choose_title"
+                    android:textSize="@dimen/patient_info_text" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/patient_info_line_height"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/nurse"
+                    android:textColor="@color/choose_title"
+                    android:textSize="@dimen/patient_info_text" />
+
+                <TextView
+                    android:id="@+id/tv_nurse"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textColor="@color/choose_title"
+                    android:textSize="@dimen/patient_info_text" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_note"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
+            <!--<com.jerry.bedpad.view.NoteView-->
+            <!--android:layout_width="@dimen/note_width"-->
+            <!--android:layout_height="match_parent"-->
+            <!--jerry:duration="800"-->
+            <!--jerry:from_color="#f93c3c"-->
+            <!--jerry:text="II级护理"-->
+            <!--jerry:to_color="#ed7878" />-->
+
+            <!--<com.jerry.bedpad.view.NoteView-->
+            <!--android:layout_width="@dimen/note_width"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_marginLeft="@dimen/note_marginLeft"-->
+            <!--jerry:duration="4000"-->
+            <!--jerry:from_color="#fc7cd3"-->
+            <!--jerry:text="低盐低脂糖尿病饮食"-->
+            <!--jerry:to_color="#f7a5dd" />-->
+
+            <!--<com.jerry.bedpad.view.NoteView-->
+            <!--android:layout_width="@dimen/note_width"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_marginLeft="@dimen/note_marginLeft"-->
+            <!--jerry:duration="3500"-->
+            <!--jerry:from_color="#fff654"-->
+            <!--jerry:text="误吸盐"-->
+            <!--jerry:to_color="#f7fa9e" />-->
+
+
+            <!--<com.jerry.bedpad.view.NoteView-->
+            <!--android:layout_width="@dimen/note_width"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_marginLeft="@dimen/note_marginLeft"-->
+            <!--jerry:from_color="#00aFFE"-->
+            <!--jerry:text="防跌倒"-->
+            <!--jerry:to_color="#69C8EC" />-->
+
+
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>

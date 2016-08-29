@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/choose_bg">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:gravity="center"
+        android:text="@string/choose_bed"
+        android:textColor="@color/choose_title"
+        android:textSize="24sp" />
+
+    <Button
+        android:id="@+id/btn_ok"
+        android:layout_width="130dp"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="27dp"
+        android:background="@drawable/choose_btn"
+        android:gravity="center"
+        android:text="@string/ok"
+        android:textColor="@color/choose_bed"
+        android:textSize="20dp" />
+
+
+    <GridView
+        android:id="@+id/gridview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/btn_ok"
+        android:layout_below="@id/tv_title"
+        android:layout_marginBottom="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:numColumns="10"
+        android:verticalSpacing="35dp" />
+</RelativeLayout>
