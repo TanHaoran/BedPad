@@ -39,13 +39,15 @@ public class DetailActivity extends AppCompatActivity {
      */
     public static final String ENTER_TYPE = "enter";
     /**
-     * 表示未绑定科室
+     * 0表示未绑定科室
      */
     public static final int ENTER_TYPE_INIT = 0;
     /**
-     * 表示已经有绑定的科室了
+     * 1表示已经有绑定的科室了
      */
     public static final int ENTER_TYPE_CHANGE = 1;
+
+
 
     @ViewInject(R.id.tv_hospital)
     private TextView mTextHospital;
