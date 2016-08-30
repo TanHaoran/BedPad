@@ -88,12 +88,22 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         MyApplication.add(this);
+        // 读取配置信息
+        loadConfig();
         // 读取各项数据
         loadData();
         // 蓝牙相关操作
         bluetoothWork();
 //        // TCP连接
         TcpUtil.getInstance(this).connect();
+    }
+
+    /**
+     * 读取配置信息
+     */
+    private void loadConfig() {
+        String ip = (String) SPUtils.get(this, "ip", "");
+        Constant.IP = ip;
     }
 
 

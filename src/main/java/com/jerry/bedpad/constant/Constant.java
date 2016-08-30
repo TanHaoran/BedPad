@@ -13,7 +13,7 @@ public class Constant {
     public static TemperatureDevice DEVICE;
 
 
-    public static String IP = "http://192.168.0.100";
+    public static String IP = "";
 
 
     /**

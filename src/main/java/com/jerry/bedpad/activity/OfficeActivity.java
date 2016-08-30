@@ -58,6 +58,11 @@ public class OfficeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         MyApplication.add(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         mEnterType = getIntent().getIntExtra(DetailActivity.ENTER_TYPE, -1);
         if (mEnterType != DetailActivity.ENTER_TYPE_CHANGE) {
             loadSpInfo();
@@ -74,7 +79,6 @@ public class OfficeActivity extends AppCompatActivity {
             loadOfficeData();
         }
     }
-
 
     private void loadSpInfo() {
         mOfficeId = (String) SPUtils.get(this, Office.OFFICE_ID, "");
@@ -134,5 +138,11 @@ public class OfficeActivity extends AppCompatActivity {
             T.showLong(this, "请选择一个科室");
         }
 
+    }
+
+    @Event(R.id.tv_title)
+    private void onSetting(View v) {
+        Intent intent = new Intent(this, ConfigActivity.class);
+        startActivity(intent);
     }
 }

@@ -45,6 +45,7 @@ public class MyApplication extends Application {
         x.view().inject(activity);
     }
 
+
     /**
      * 切换app是否显示和隐藏标题栏和菜单栏
      */

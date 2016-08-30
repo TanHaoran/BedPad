@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/choose_bg"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
+
+    <EditText
+        android:id="@+id/edit"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true" />
+
+
+    <Button
+        android:id="@+id/btn_ok"
+        android:layout_width="130dp"
+        android:layout_height="40dp"
+        android:layout_below="@id/edit"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="27dp"
+        android:background="@drawable/choose_btn"
+        android:gravity="center"
+        android:text="@string/ok"
+        android:textColor="@color/choose_bed"
+        android:textSize="20dp" />
+
+
+</RelativeLayout>
