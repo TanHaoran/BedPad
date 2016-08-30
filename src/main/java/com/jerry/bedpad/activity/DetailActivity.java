@@ -47,8 +47,6 @@ public class DetailActivity extends AppCompatActivity {
      */
     public static final int ENTER_TYPE_CHANGE = 1;
 
-
-
     @ViewInject(R.id.tv_hospital)
     private TextView mTextHospital;
 
