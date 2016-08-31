@@ -162,6 +162,7 @@ public class TcpUtil {
                     //   mSocket.setSoTimeout(TIME_OUT);
                     L.i("已连接...");
 
+
                     // 发送上线消息
                     send(mSocket, addMac(TcpUtil.ON_LINE_CODE));
 

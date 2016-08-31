@@ -32,7 +32,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:text="交大一附院"
+                    android:text=""
                     android:textColor="@color/choose_title"
                     android:textSize="@dimen/detail_hospital" />
 
@@ -42,7 +42,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@id/tv_hospital"
-                    android:text=" - "
+                    android:text=""
                     android:textColor="@color/choose_title"
                     android:textSize="@dimen/detail_hospital" />
 
@@ -70,7 +70,7 @@
                     android:layout_centerVertical="true"
                     android:text=""
                     android:textColor="@color/white"
-                    android:textSize="46sp" />
+                    android:textSize="50sp" />
 
                 <TextView
                     android:id="@+id/tv_bed"
@@ -80,7 +80,7 @@
                     android:layout_toRightOf="@id/tv_hospital"
                     android:text="床"
                     android:textColor="@color/choose_title"
-                    android:textSize="16sp" />
+                    android:textSize="20sp" />
 
 
             </LinearLayout>

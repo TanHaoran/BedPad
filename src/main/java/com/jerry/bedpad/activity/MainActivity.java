@@ -117,12 +117,32 @@ public class MainActivity extends AppCompatActivity {
         if (TextUtils.isEmpty(mOfficeId) || TextUtils.isEmpty(mBedHisNumber)) {
             T.showLong(this, "设备未绑定");
         } else {
-            // 读取病患信息
-            loadPatientInfo(mOfficeId, mBedHisNumber);
+            // 每隔一段时间读取一次病患信息
+            mHandler.post(mUpdateInfo);
+//            loadPatientInfo(mOfficeId, mBedHisNumber);
         }
         // 读取绑定的设备信息
         loadDeviceSp(mOfficeId, mBedHisNumber);
     }
+
+    /**
+     * 默认每10分钟更新一次体温数据
+     */
+    private static final int DEFAULT_UPDATE_PATIENT_INFO_TIME = 10 * 60 * 1000;
+
+    /**
+     * 定时监听体温线程
+     */
+    private Runnable mUpdateInfo = new Runnable() {
+        @Override
+        public void run() {
+            // 读取病患信息
+            loadPatientInfo(mOfficeId, mBedHisNumber);
+            // 每隔DEFAULT_UPDATE_PATIENT_INFO_TIME时间，进行重新获取温度数据
+            mHandler.postDelayed(mUpdateInfo, DEFAULT_UPDATE_PATIENT_INFO_TIME);
+        }
+    };
+
 
     /**
      * 蓝牙相关操作
@@ -132,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
         if (!BluetoothUtil.checkBluetoothEnvironment(this)) {
             T.showLong(this, "设备不支持蓝牙4.0");
             // 不支持就退出应用
-            MyApplication.clearAll();
+//            MyApplication.clearAll();
         }
     }
 
@@ -210,7 +230,7 @@ public class MainActivity extends AppCompatActivity {
         for (Device d : devices) {
             if (d.getType().equals(Device.TYPE_TEMPERATURE)) {
                 mDeviceId = Device.TYPE_TEMPERATURE_RAINBOW_ID_PREFIX + d.getId();
-                startMonitor();
+//                startMonitor();
             }
         }
     }
@@ -267,6 +287,16 @@ public class MainActivity extends AppCompatActivity {
         // 设置科室数据
         String officeName = (String) SPUtils.get(this, Office.OFFICE_NAME, "");
         mTextOffice.setText(officeName);
+        // 首先清空信息
+        mTextNumber.setText("");
+        mTextName.setText("");
+        mTextAge.setText("");
+        mTextDate.setText("");
+        mTextHosId.setText("");
+        mTextHistory.setText("");
+        mTextDoctor.setText("");
+        mTextNurse.setText("");
+        mNoteLayout.removeAllViews();
         // 设置病患数据
         if (mPatient != null) {
             mTextNumber.setText(mPatient.getBed());
@@ -337,6 +367,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        mHandler.removeCallbacks(mUpdateInfo);
+        mHandler.removeCallbacks(mMonitor);
         TcpUtil.getInstance(this).close();
     }
 

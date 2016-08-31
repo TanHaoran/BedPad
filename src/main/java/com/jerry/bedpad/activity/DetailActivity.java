@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.Gravity;
@@ -17,11 +19,12 @@ import android.widget.TextView;
 
 import com.jerry.bedpad.R;
 import com.jerry.bedpad.app.MyApplication;
-import com.jerry.bedpad.bean.TemperatureDevice;
 import com.jerry.bedpad.bean.Office;
+import com.jerry.bedpad.bean.TemperatureDevice;
 import com.jerry.bedpad.constant.Constant;
 import com.jerry.bedpad.listener.OnDoubleClickListener;
 import com.jerry.bedpad.util.DensityUtils;
+import com.jerry.bedpad.util.L;
 import com.jerry.bedpad.util.SPUtils;
 import com.jerry.bedpad.view.RippleBackground;
 
@@ -131,19 +134,57 @@ public class DetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         MyApplication.add(this);
         // 初始化界面
-        setPatientData();
         initView();
+        mHandler.post(mUpdateInfo);
         // 注册广播用来接收蓝牙数据
         initReceiver();
     }
+
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            L.i("详细界面更新信息");
+            setPatientData();
+        }
+    };
+
+    /**
+     * 默认每10分钟更新一次体温数据
+     */
+    private static final int DEFAULT_UPDATE_PATIENT_INFO_TIME = 10 * 60 * 1000;
+
+    /**
+     * 定时监听体温线程
+     */
+    private Runnable mUpdateInfo = new Runnable() {
+        @Override
+        public void run() {
+            Message msg = mHandler.obtainMessage();
+            msg.sendToTarget();
+            // 每隔DEFAULT_UPDATE_PATIENT_INFO_TIME时间，进行重新获取温度数据
+            mHandler.postDelayed(mUpdateInfo, DEFAULT_UPDATE_PATIENT_INFO_TIME);
+        }
+    };
 
     /**
      * 初始化界面
      */
     private void setPatientData() {
-        // 初始化科室数据
-        String office = (String) SPUtils.get(this, Office.OFFICE_NAME, "");
-        mTextOffice.setText(office);
+        // 清空之前的信息
+        mTextNumber.setText("");
+        mTextHosId.setText("");
+        mTextName.setText("");
+        mTextSex.setText("");
+        mTextAge.setText("");
+        mTextDiagnosis.setText("");
+        mTextHistory.setText("");
+        mTextDoctor.setText("");
+        mTextNurse.setText("");
+        mTextInDate.setText("");
+        mTextLevel.setText("");
+        mTextFood.setText("");
+
         // 初始化病患数据
         if (Constant.PATIENT != null) {
             mTextNumber.setText(Constant.PATIENT.getBed());
@@ -164,12 +205,18 @@ public class DetailActivity extends AppCompatActivity {
             mTextLevel.setText(Constant.PATIENT.getLevel());
             mTextFood.setText("无");
         }
+        // 初始化中间便签布局
+        initNoteLayout();
     }
 
     /**
      * 初始化界面
      */
     private void initView() {
+
+        // 初始化科室数据
+        String office = (String) SPUtils.get(this, Office.OFFICE_NAME, "");
+        mTextOffice.setText(office);
         // 如果传过来的时候已经有了设备信息就显示出体温数据
         Bundle b = getIntent().getBundleExtra("bundle");
         if (b != null) {
@@ -179,8 +226,6 @@ public class DetailActivity extends AppCompatActivity {
                 setTemperatureData(d);
             }
         }
-        // 初始化中间便签布局
-        initNoteLayout();
 
         /*******************************************************/
         /*******************************************************/
@@ -251,7 +296,7 @@ public class DetailActivity extends AppCompatActivity {
         }
         v.setLayoutParams(lp);
         TextView textView = (TextView) v;
-        textView.setTextSize(22);
+        textView.setTextSize(28);
         textView.setTextColor(Color.WHITE);
         textView.setGravity(Gravity.CENTER);
         mNoteLayout.addView(v);
@@ -339,6 +384,7 @@ public class DetailActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        mHandler.removeCallbacks(mUpdateInfo);
         // 解除监听
         unregisterReceiver(mReceiver);
     }

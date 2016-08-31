@@ -31,7 +31,7 @@ public class ConfigActivity extends AppCompatActivity {
     private void loadConfig() {
         String ip = (String) SPUtils.get(this, "ip", "");
         if (TextUtils.isEmpty(ip)) {
-            ip = "http://192.168.0.101";
+            ip = "http://192.168.0.100";
         }
         mTextIp.setText(ip);
     }

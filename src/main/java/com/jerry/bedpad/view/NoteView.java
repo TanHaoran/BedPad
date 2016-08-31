@@ -23,7 +23,7 @@ public class NoteView extends RelativeLayout {
 
     private static int DEFAULT_FROM_COLOR = 0x0000aFFE;
     private static int DEFAULT_TO_COLOR = 0x0069C8EC;
-    private static float DEFAULT_TEXT_SIZE = 32;
+    private static float DEFAULT_TEXT_SIZE = 36;
     private static int DEFAULT_TEXT_COLOR = 0xFF000000;
     private static int DEFAULT_TEXT_MARGIN = 15;
     private static int DEFAULT_DURATION = 3000;
