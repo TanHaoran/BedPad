@@ -54,7 +54,7 @@ public class Constant {
     /**
      * 体温数据服务端IP
      */
-    public static final String TEMPERATURE_SERVER_IP = "192.168.0.226";
+    public static final String TEMPERATURE_SERVER_IP = "192.168.0.145";
     /**
      * 体温数据服务端端口
      */

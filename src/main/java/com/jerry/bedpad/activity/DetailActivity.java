@@ -62,6 +62,8 @@ public class DetailActivity extends AppCompatActivity {
     @ViewInject(R.id.tv_hos_id)
     private TextView mTextHosId;
 
+    @ViewInject(R.id.v_name)
+    private View mTextView;
     @ViewInject(R.id.tv_name)
     private TextView mTextName;
     @ViewInject(R.id.tv_sex)
@@ -80,6 +82,8 @@ public class DetailActivity extends AppCompatActivity {
     private TextView mTextInDate;
     @ViewInject(R.id.tv_level)
     private TextView mTextLevel;
+    @ViewInject(R.id.v_level)
+    private View mLevelView;
     @ViewInject(R.id.tv_food)
     private TextView mTextFood;
 
@@ -124,22 +128,6 @@ public class DetailActivity extends AppCompatActivity {
     public static final String GET_BLUETOOTH_VALUE = "com.jerry.bluetooth.value";
 
 
-    /**
-     * 设备信息
-     */
-    private TemperatureDevice mDevice;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        MyApplication.add(this);
-        // 初始化界面
-        initView();
-        mHandler.post(mUpdateInfo);
-        // 注册广播用来接收蓝牙数据
-        initReceiver();
-    }
-
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -167,6 +155,23 @@ public class DetailActivity extends AppCompatActivity {
         }
     };
 
+
+    /**
+     * 设备信息
+     */
+    private TemperatureDevice mDevice;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        MyApplication.add(this);
+        // 初始化界面
+        initView();
+        mHandler.post(mUpdateInfo);
+        // 注册广播用来接收蓝牙数据
+        initReceiver();
+    }
+
     /**
      * 初始化界面
      */
@@ -192,8 +197,10 @@ public class DetailActivity extends AppCompatActivity {
             mTextName.setText(Constant.PATIENT.getName());
             if ("女".equals(Constant.PATIENT.getSex())) {
                 mTextName.setTextColor(getResources().getColor(R.color.name_text_female));
+                mTextView.setBackgroundColor(getResources().getColor(R.color.name_text_female));
             } else {
                 mTextName.setTextColor(getResources().getColor(R.color.name_text_male));
+                mTextView.setBackgroundColor(getResources().getColor(R.color.name_text_male));
             }
             mTextSex.setText(Constant.PATIENT.getSex());
             mTextAge.setText(Constant.PATIENT.getAge());
@@ -423,5 +430,37 @@ public class DetailActivity extends AppCompatActivity {
     private void onMain(View v) {
         finish();
     }
+
+
+    /**
+     * 实际：
+     * -----------
+     * 银行类
+     * -----------
+     *
+     * 总共：8.59
+     *
+     *
+     * -----------
+     * 理财类
+     * -----------
+     *
+     * 总共：102284.89
+     *
+     *
+     * -----------
+     * 信用卡类
+     * -----------
+     *
+     * 总共：1840.43
+     *
+     *
+     * -----------
+     * 现金类
+     * -----------
+     * 总共：117.5
+     *
+     *
+     */
 
 }

@@ -237,7 +237,6 @@ public class TcpUtil {
         // 发送上线信息
         outputStream.write(buffer);
         String result = printHexToString(buffer, buffer.length);
-        L.i(result);
     }
 
 
@@ -348,6 +347,7 @@ public class TcpUtil {
                 // 如果没有数据也要发送结束码
                 // 发送结束信息
                 send(mSocket, TcpUtil.END_CODE);
+                L.i("发送结束码：" + printHexToString(TcpUtil.END_CODE, TcpUtil.END_CODE.length));
             }
         } catch (IOException e) {
             e.printStackTrace();

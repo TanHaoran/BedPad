@@ -84,47 +84,6 @@ public class MainActivity extends AppCompatActivity {
     private Handler mHandler = new Handler();
 
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        MyApplication.add(this);
-        // 读取配置信息
-        loadConfig();
-        // 读取各项数据
-        loadData();
-        // 蓝牙相关操作
-        bluetoothWork();
-//        // TCP连接
-        TcpUtil.getInstance(this).connect();
-    }
-
-    /**
-     * 读取配置信息
-     */
-    private void loadConfig() {
-        String ip = (String) SPUtils.get(this, "ip", "");
-        Constant.IP = ip;
-    }
-
-
-    /**
-     * 读取各项数据
-     */
-    private void loadData() {
-        // 读取应用数据中绑定的科室id和床号hisId
-        loadOfficeAndBedSp();
-        // 当科室id和床号hisId中有一个没有值时，就认为没有绑定数据
-        if (TextUtils.isEmpty(mOfficeId) || TextUtils.isEmpty(mBedHisNumber)) {
-            T.showLong(this, "设备未绑定");
-        } else {
-            // 每隔一段时间读取一次病患信息
-            mHandler.post(mUpdateInfo);
-//            loadPatientInfo(mOfficeId, mBedHisNumber);
-        }
-        // 读取绑定的设备信息
-        loadDeviceSp(mOfficeId, mBedHisNumber);
-    }
-
     /**
      * 默认每10分钟更新一次体温数据
      */
@@ -145,6 +104,71 @@ public class MainActivity extends AppCompatActivity {
 
 
     /**
+     * 默认每10秒更新一次体温数据
+     */
+    private static final int DEFAULT_MONITOR = 10 * 1000;
+
+    /**
+     * 定时监听体温线程
+     */
+    private Runnable mMonitor = new Runnable() {
+        @Override
+        public void run() {
+            BluetoothUtil.getInstance().startMonitorBroadcast(new BluetoothUtil.OnDeviceFound() {
+
+                @Override
+                public void onLeScan(TemperatureDevice blueInfo) {
+                    // 如果搜索到的设备id和保存的保定的设备id一致，则发送广播
+                    if (mDeviceId.equals(blueInfo.getId())) {
+                        Constant.DEVICE = blueInfo;
+                        Intent intent = new Intent(TemperatureActivity.GET_BLUETOOTH_VALUE);
+                        Bundle b = new Bundle();
+                        b.putSerializable(TemperatureDevice.DEVICE, blueInfo);
+                        intent.putExtra("bundle", b);
+                        sendBroadcast(intent);
+                    }
+                }
+            });
+            // 每隔DEFAULT_MONITOR时间，进行重新获取温度数据
+            mHandler.postDelayed(mMonitor, DEFAULT_MONITOR);
+        }
+    };
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        MyApplication.add(this);
+        // 读取各项数据
+        loadData();
+        // 蓝牙相关操作
+        bluetoothWork();
+//        // TCP连接
+        TcpUtil.getInstance(this).connect();
+    }
+
+
+
+    /**
+     * 读取各项数据
+     */
+    private void loadData() {
+        // 读取应用数据中绑定的科室id和床号hisId
+        loadOfficeAndBedSp();
+        // 当科室id和床号hisId中有一个没有值时，就认为没有绑定数据
+        if (TextUtils.isEmpty(mOfficeId) || TextUtils.isEmpty(mBedHisNumber)) {
+            T.showLong(this, "设备未绑定");
+        } else {
+            // 每隔一段时间读取一次病患信息
+            mHandler.post(mUpdateInfo);
+//            loadPatientInfo(mOfficeId, mBedHisNumber);
+        }
+        // 读取绑定的设备信息
+        loadDeviceSp(mOfficeId, mBedHisNumber);
+    }
+
+
+    /**
      * 蓝牙相关操作
      */
     private void bluetoothWork() {
@@ -152,7 +176,7 @@ public class MainActivity extends AppCompatActivity {
         if (!BluetoothUtil.checkBluetoothEnvironment(this)) {
             T.showLong(this, "设备不支持蓝牙4.0");
             // 不支持就退出应用
-//            MyApplication.clearAll();
+            MyApplication.clearAll();
         }
     }
 
@@ -230,7 +254,7 @@ public class MainActivity extends AppCompatActivity {
         for (Device d : devices) {
             if (d.getType().equals(Device.TYPE_TEMPERATURE)) {
                 mDeviceId = Device.TYPE_TEMPERATURE_RAINBOW_ID_PREFIX + d.getId();
-//                startMonitor();
+                startMonitor();
             }
         }
     }
@@ -249,36 +273,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    /**
-     * 默认每10秒更新一次体温数据
-     */
-    private static final int DEFAULT_MONITOR = 10 * 1000;
 
-    /**
-     * 定时监听体温线程
-     */
-    private Runnable mMonitor = new Runnable() {
-        @Override
-        public void run() {
-            BluetoothUtil.getInstance().startMonitorBroadcast(new BluetoothUtil.OnDeviceFound() {
-
-                @Override
-                public void onLeScan(TemperatureDevice blueInfo) {
-                    // 如果搜索到的设备id和保存的保定的设备id一致，则发送广播
-                    if (mDeviceId.equals(blueInfo.getId())) {
-                        Constant.DEVICE = blueInfo;
-                        Intent intent = new Intent(TemperatureActivity.GET_BLUETOOTH_VALUE);
-                        Bundle b = new Bundle();
-                        b.putSerializable(TemperatureDevice.DEVICE, blueInfo);
-                        intent.putExtra("bundle", b);
-                        sendBroadcast(intent);
-                    }
-                }
-            });
-            // 每隔DEFAULT_MONITOR时间，进行重新获取温度数据
-            mHandler.postDelayed(mMonitor, DEFAULT_MONITOR);
-        }
-    };
 
     /**
      * 设置病患数据

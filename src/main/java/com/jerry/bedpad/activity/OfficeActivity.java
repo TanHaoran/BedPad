@@ -58,6 +58,16 @@ public class OfficeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         MyApplication.add(this);
+        // 读取配置信息
+        loadConfig();
+    }
+
+    /**
+     * 读取配置信息
+     */
+    private void loadConfig() {
+        String ip = (String) SPUtils.get(this, "ip", "http://192.168.0.100");
+        Constant.IP = ip;
     }
 
     @Override
@@ -79,6 +89,8 @@ public class OfficeActivity extends AppCompatActivity {
             loadOfficeData();
         }
     }
+
+
 
     private void loadSpInfo() {
         mOfficeId = (String) SPUtils.get(this, Office.OFFICE_ID, "");
