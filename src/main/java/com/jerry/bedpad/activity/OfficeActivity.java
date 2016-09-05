@@ -29,6 +29,9 @@ import org.xutils.x;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 科室绑定界面
+ */
 @ContentView(R.layout.activity_office)
 public class OfficeActivity extends AppCompatActivity {
 
