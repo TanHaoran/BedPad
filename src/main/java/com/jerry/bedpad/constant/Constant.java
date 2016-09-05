@@ -8,12 +8,18 @@ import com.jerry.bedpad.bean.Patient;
  */
 public class Constant {
 
+
+
     public static Patient PATIENT;
 
     public static TemperatureDevice DEVICE;
 
 
     public static String IP = "";
+
+
+    public static  long firstTime = 0;
+    public static  long unTouchTime = 0;
 
 
     /**

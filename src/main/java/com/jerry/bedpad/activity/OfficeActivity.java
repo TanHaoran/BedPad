@@ -53,7 +53,6 @@ public class OfficeActivity extends AppCompatActivity {
 
     private int mEnterType = -1;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,13 +90,18 @@ public class OfficeActivity extends AppCompatActivity {
     }
 
 
-
+    /**
+     * 读取科室id和his床号id
+     */
     private void loadSpInfo() {
         mOfficeId = (String) SPUtils.get(this, Office.OFFICE_ID, "");
         mBedHisNumber = (String) SPUtils.get(this, Bed.BED_HIS_NUMBER, "");
     }
 
 
+    /**
+     * 读取科室信息
+     */
     private void loadOfficeData() {
         String url = Constant.IP + Constant.SERVICE + Constant.GET_ALL_OFFICE;
         L.i("读取科室： " + url);
@@ -118,6 +122,9 @@ public class OfficeActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * 设置信息
+     */
     private void setData() {
         mAdapter = new OfficeAdapter(this, mOffices, R.layout.item_office);
         mListView.setAdapter(mAdapter);

@@ -170,7 +170,10 @@ public class DetailActivity extends AppCompatActivity {
         mHandler.post(mUpdateInfo);
         // 注册广播用来接收蓝牙数据
         initReceiver();
+        DensityUtils.setBrightness(this, 255);
+        L.i("屏幕的亮度为：" + DensityUtils.getScreenBrightness(this));
     }
+
 
     /**
      * 初始化界面
@@ -210,7 +213,7 @@ public class DetailActivity extends AppCompatActivity {
             mTextNurse.setText(Constant.PATIENT.getNurse());
             mTextInDate.setText(Constant.PATIENT.getInDate());
             mTextLevel.setText(Constant.PATIENT.getLevel());
-            mTextFood.setText("无");
+            mTextFood.setText(Constant.PATIENT.getFood());
         }
         // 初始化中间便签布局
         initNoteLayout();
@@ -239,7 +242,7 @@ public class DetailActivity extends AppCompatActivity {
         /***********注册医院文字的双击事件，用来修改绑定科室***********/
         /*******************************************************/
         /*******************************************************/
-        mTextHospital.setOnTouchListener(new OnDoubleClickListener() {
+        mTextOffice.setOnTouchListener(new OnDoubleClickListener() {
             @Override
             protected void onDoubleClick() {
                 MyApplication.clearAll();
@@ -271,18 +274,36 @@ public class DetailActivity extends AppCompatActivity {
                         TextView textView = new TextView(this);
                         textView.setText(events[i]);
                         if (i == length - 1) {
-                            fillData(textView, 0xbbf93c3c, true);
+                            if (!TextUtils.isEmpty(Constant.PATIENT.getFood())) {
+                                fillData(textView, 0xbbf93c3c, false);
+                            } else {
+                                fillData(textView, 0xbbf93c3c, true);
+                            }
                         } else {
-
                             fillData(textView, 0xbbf93c3c, false);
                         }
                     }
                 } else {
-                    fillData(levelText, 0xbbf93c3c, true);
+                    if (!TextUtils.isEmpty(Constant.PATIENT.getFood())) {
+                        fillData(levelText, 0xbbf93c3c, false);
+                    } else {
+                        fillData(levelText, 0xbbf93c3c, true);
+                    }
                 }
             } else {
-                fillData(levelText, 0xbbf93c3c, true);
+                if (!TextUtils.isEmpty(Constant.PATIENT.getFood())) {
+                    fillData(levelText, 0xbbf93c3c, false);
+                } else {
+                    fillData(levelText, 0xbbf93c3c, true);
+                }
             }
+            // 饮食板块添加
+            if (!TextUtils.isEmpty(Constant.PATIENT.getFood())) {
+                TextView foodView = new TextView(this);
+                foodView.setText(Constant.PATIENT.getFood());
+                fillData(foodView, 0xbb00b1ff, true);
+            }
+
         }
     }
 
@@ -303,7 +324,7 @@ public class DetailActivity extends AppCompatActivity {
         }
         v.setLayoutParams(lp);
         TextView textView = (TextView) v;
-        textView.setTextSize(28);
+        textView.setTextSize(44);
         textView.setTextColor(Color.WHITE);
         textView.setGravity(Gravity.CENTER);
         mNoteLayout.addView(v);

@@ -157,8 +157,8 @@ public class BluetoothUtil extends BluetoothProtocol {
                         getBatteryPower(receiveBytes),
                         getSrcTemperature(receiveBytes)
                 );
-                L.i("-------------发现设备-------------");
-                Log.i(TAG, str);
+//                L.i("-------------发现设备-------------");
+//                Log.i(TAG, str);
                 if (mOnDeviceFound != null) {
                     TemperatureDevice device = new TemperatureDevice();
                     device.setId(deviceId);
@@ -281,7 +281,7 @@ public class BluetoothUtil extends BluetoothProtocol {
         stopMonitorBroadcast();
         mOnDeviceFound = onDeviceFound;
         boolean success = mBluetoothAdapter.startLeScan(mIBleScanCallback);
-        Log.i(TAG, "扫描蓝牙设备启动：" + success);
+//        Log.i(TAG, "扫描蓝牙设备启动：" + success);
     }
 
     /**
@@ -289,7 +289,7 @@ public class BluetoothUtil extends BluetoothProtocol {
      */
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
     public void stopMonitorBroadcast() {
-        Log.i(TAG, "停止扫描扫描蓝牙设备");
+//        Log.i(TAG, "停止扫描扫描蓝牙设备");
         mBluetoothAdapter.stopLeScan(mIBleScanCallback);
     }
 

@@ -18,6 +18,7 @@ public class Patient {
     private String state;
     private String event;
     private String history;
+    private String food;
 
     public String getId() {
         return id;
@@ -129,5 +130,13 @@ public class Patient {
 
     public void setHistory(String history) {
         this.history = history;
+    }
+
+    public String getFood() {
+        return food;
+    }
+
+    public void setFood(String food) {
+        this.food = food;
     }
 }

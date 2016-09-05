@@ -21,9 +21,9 @@ import com.jerry.bedpad.bluetooth.BluetoothUtil;
 import com.jerry.bedpad.constant.Constant;
 import com.jerry.bedpad.util.JsonUtil;
 import com.jerry.bedpad.util.L;
-import com.jerry.bedpad.util.TcpUtil;
 import com.jerry.bedpad.util.SPUtils;
 import com.jerry.bedpad.util.T;
+import com.jerry.bedpad.util.TcpUtil;
 import com.jerry.bedpad.view.NoteView;
 
 import org.xutils.http.RequestParams;
@@ -145,8 +145,8 @@ public class MainActivity extends AppCompatActivity {
         bluetoothWork();
 //        // TCP连接
         TcpUtil.getInstance(this).connect();
-    }
 
+    }
 
 
     /**
@@ -274,7 +274,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
     /**
      * 设置病患数据
      */
@@ -341,6 +340,16 @@ public class MainActivity extends AppCompatActivity {
                     mNoteLayout.addView(note);
                 }
             }
+        }
+        // 饮食构造
+        if (!TextUtils.isEmpty(patient.getFood())) {
+            NoteView foodView = new NoteView(this);
+            foodView.setDuration(2000);
+            foodView.setFromColor(0xff00b1ff);
+            foodView.setToColor(0xff00b1ff);
+            foodView.setText(patient.getFood());
+            foodView.startChange();
+            mNoteLayout.addView(foodView);
         }
     }
 

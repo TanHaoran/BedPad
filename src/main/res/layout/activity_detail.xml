@@ -404,7 +404,7 @@
                     android:id="@+id/tv_food"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="半流食"
+                    android:text=""
                     android:textColor="@color/food_text"
                     android:textSize="@dimen/detail_hospital" />
             </LinearLayout>

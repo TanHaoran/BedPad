@@ -1,7 +1,9 @@
 package com.jerry.bedpad.util;
 
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.Context;
+import android.provider.Settings;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 
@@ -81,10 +83,11 @@ public class DensityUtils {
 
     /**
      * 获取屏幕宽度
+     *
      * @param activity
      * @return
      */
-    public  static int getScreenWidth(Activity activity) {
+    public static int getScreenWidth(Activity activity) {
         DisplayMetrics dm = new DisplayMetrics();
         activity.getWindowManager().getDefaultDisplay().getMetrics(dm);
         return dm.widthPixels;
@@ -92,12 +95,42 @@ public class DensityUtils {
 
     /**
      * 获取屏幕高度
+     *
      * @param activity
      * @return
      */
-    public  static int getScreenHeight(Activity activity) {
+    public static int getScreenHeight(Activity activity) {
         DisplayMetrics dm = new DisplayMetrics();
         activity.getWindowManager().getDefaultDisplay().getMetrics(dm);
         return dm.heightPixels;
+    }
+
+
+    /**
+     * 获取屏幕亮度
+     *
+     * @param activity
+     * @return
+     */
+    public static int getScreenBrightness(Activity activity) {
+        int value = 0;
+        ContentResolver cr = activity.getContentResolver();
+        try {
+            value = Settings.System.getInt(cr, Settings.System.SCREEN_BRIGHTNESS);
+        } catch (Settings.SettingNotFoundException e) {
+            e.printStackTrace();
+        }
+        return value;
+    }
+
+    /**
+     * 调整屏幕亮度
+     */
+    public static void setBrightness(Context context, int value) {
+
+//        WindowManager.LayoutParams params = activity.getWindow().getAttributes();
+//        params.screenBrightness = value / 255f;
+//        activity.getWindow().setAttributes(params);
+        Settings.System.putInt(context.getContentResolver(), Settings.System.SCREEN_BRIGHTNESS, value);
     }
 }

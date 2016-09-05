@@ -109,17 +109,17 @@ public class TcpUtil {
         @Override
         public void run() {
             try {
-                L.i("检测服务是否连接。。。");
+//                L.i("检测服务是否连接。。。");
                 if (isServerClose()) {
-                    L.i("服务连接已经断开。。。");
+//                    L.i("服务连接已经断开。。。");
                     if (mSocket != null) {
                         mSocket.close();
                     }
                     handler.removeCallbacks(keepAlive);
-                    L.i("重新连接。。。");
+//                    L.i("重新连接。。。");
                     connect();
                 } else {
-                    L.i("服务连接正常。。。");
+//                    L.i("服务连接正常。。。");
                 }
                 handler.postDelayed(this, KEEP_ALIVE_TIME_OUT);
             } catch (Exception e) {
@@ -154,13 +154,13 @@ public class TcpUtil {
 
                 try {
                     //服务端IP地址和端口号
-                    L.i("正在连接..." + Constant.TEMPERATURE_SERVER_IP + ":" + Constant.TEMPERATURE_SERVER_PORT);
+//                    L.i("正在连接..." + Constant.TEMPERATURE_SERVER_IP + ":" + Constant.TEMPERATURE_SERVER_PORT);
                     mSocket = new Socket(Constant.TEMPERATURE_SERVER_IP, Constant.TEMPERATURE_SERVER_PORT);
                     //开启保持活动状态的套接字
                     mSocket.setKeepAlive(true);
                     //设置超时时间（设置超时时间会导致无法在超过时间之后接受消息，报异常）
                     //   mSocket.setSoTimeout(TIME_OUT);
-                    L.i("已连接...");
+//                    L.i("已连接...");
 
 
                     // 发送上线消息
@@ -176,7 +176,7 @@ public class TcpUtil {
                         int length = is.read(buffer);
 
                         String result = printHexToString(buffer, length);
-                        L.i("接收到消息：" + result);
+//                        L.i("接收到消息：" + result);
                         parseResult(buffer, length);
 
                     }
@@ -339,15 +339,15 @@ public class TcpUtil {
 
                 // 发送报文
                 send(mSocket, message);
-                L.i("发送数据：" + printHexToString(message, message.length));
+//                L.i("发送数据：" + printHexToString(message, message.length));
                 // 发送结束信息
                 send(mSocket, TcpUtil.END_CODE);
-                L.i("发送结束码：" + printHexToString(TcpUtil.END_CODE, TcpUtil.END_CODE.length));
+//                L.i("发送结束码：" + printHexToString(TcpUtil.END_CODE, TcpUtil.END_CODE.length));
             } else {
                 // 如果没有数据也要发送结束码
                 // 发送结束信息
                 send(mSocket, TcpUtil.END_CODE);
-                L.i("发送结束码：" + printHexToString(TcpUtil.END_CODE, TcpUtil.END_CODE.length));
+//                L.i("发送结束码：" + printHexToString(TcpUtil.END_CODE, TcpUtil.END_CODE.length));
             }
         } catch (IOException e) {
             e.printStackTrace();

@@ -175,6 +175,13 @@ public class JsonUtil {
             } else {
                 p.setHistory("");
             }
+            // 饮食
+            String food = data.getString("Diet");
+            if (!"null".equals(food)) {
+                p.setFood(food);
+            } else {
+                p.setHistory("");
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
