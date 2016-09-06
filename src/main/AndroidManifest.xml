@@ -39,7 +39,11 @@
         <activity
             android:name=".activity.DripActivity"
             android:theme="@style/activity_fade" />
-        <activity android:name=".activity.ConfigActivity"></activity>
+        <activity android:name=".activity.ConfigActivity"/>
+
+        <activity
+            android:name=".activity.DownloadingActivity"
+            android:theme="@style/MyTransparent" />
     </application>
 
 </manifest>

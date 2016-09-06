@@ -1,6 +1,8 @@
 package com.jerry.bedpad.activity;
 
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -21,11 +23,16 @@ import com.jerry.bedpad.bluetooth.BluetoothUtil;
 import com.jerry.bedpad.constant.Constant;
 import com.jerry.bedpad.util.JsonUtil;
 import com.jerry.bedpad.util.L;
+import com.jerry.bedpad.util.MyCallBack;
 import com.jerry.bedpad.util.SPUtils;
 import com.jerry.bedpad.util.T;
 import com.jerry.bedpad.util.TcpUtil;
+import com.jerry.bedpad.util.XUtil;
+import com.jerry.bedpad.view.MyDialog;
 import com.jerry.bedpad.view.NoteView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.xutils.http.RequestParams;
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
@@ -135,6 +142,16 @@ public class MainActivity extends AppCompatActivity {
     };
 
 
+    /**
+     * app安装版本
+     */
+    private String installedVersion;
+    /**
+     * app服务最新版本
+     */
+    private String serviceVersion;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -145,7 +162,8 @@ public class MainActivity extends AppCompatActivity {
         bluetoothWork();
 //        // TCP连接
         TcpUtil.getInstance(this).connect();
-
+        // 检查更新
+        // update();
     }
 
 
@@ -350,6 +368,72 @@ public class MainActivity extends AppCompatActivity {
             foodView.setText(patient.getFood());
             foodView.startChange();
             mNoteLayout.addView(foodView);
+        }
+    }
+
+    /**
+     * 检测是否有新版本
+     */
+    private void update() {
+        // 获取当前App安装的版本号
+        getInstalledVersion();
+        // 获取服务端App最新的版本号
+        getServiceVersion();
+    }
+
+    /**
+     * 获取目前App的版本
+     *
+     * @return
+     */
+    private String getInstalledVersion() {
+        installedVersion = "0.0";
+        try {
+            PackageManager manager = getPackageManager();
+            PackageInfo info = manager.getPackageInfo(getPackageName(), 0);
+            installedVersion = info.versionName;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return installedVersion;
+    }
+
+    /**
+     * 获取服务端App最新的版本号
+     */
+    private void getServiceVersion() {
+        XUtil.Get(Constant.GET_VERSION, null, new MyCallBack<String>() {
+            @Override
+            public void onSuccess(String result) {
+                if (!TextUtils.isEmpty(result)) {
+                    try {
+                        JSONObject object = new JSONObject(result);
+                        serviceVersion = object.getString("version");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    // 比较两个版本是否一致
+                    compareVersion();
+                }
+            }
+        });
+    }
+
+
+    /**
+     * 比较两个版本是否一致
+     */
+    private void compareVersion() {
+        L.i("当前版本号：" + installedVersion);
+        L.i("服务版本号：" + serviceVersion);
+        if (!installedVersion.equals(serviceVersion)) {
+            new MyDialog(this).showDialog("发现新版本，是否立刻更新？").setOnOkListener(new MyDialog.OnOkListener() {
+                @Override
+                public void onOk() {
+                    Intent intent = new Intent(MainActivity.this, DownloadingActivity.class);
+                    startActivity(intent);
+                }
+            });
         }
     }
 

@@ -9,7 +9,6 @@ import com.jerry.bedpad.bean.Patient;
 public class Constant {
 
 
-
     public static Patient PATIENT;
 
     public static TemperatureDevice DEVICE;
@@ -56,6 +55,16 @@ public class Constant {
      */
     public static final String GET_DEVICE_INFO = "GetJointDevice";
 
+    /**
+     * 获取APK服务版本
+     */
+    public static final String GET_VERSION = "GetVersion";
+
+    /**
+     * 获取APK下载地址
+     */
+    public static final String APK_URL = "";
+
 
     /**
      * 体温数据服务端IP
@@ -65,8 +74,6 @@ public class Constant {
      * 体温数据服务端端口
      */
     public static final int TEMPERATURE_SERVER_PORT = 9005;
-
-
 
 
 }
