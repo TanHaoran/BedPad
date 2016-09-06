@@ -333,8 +333,8 @@ public class MainActivity extends AppCompatActivity {
                 for (String e : events) {
                     NoteView note = new NoteView(this);
                     note.setDuration(3000);
-                    note.setFromColor(0xfff93c3c);
-                    note.setToColor(0xffed7878);
+                    note.setFromColor(0xff00b1ff);
+                    note.setToColor(0xff00b1ff);
                     note.setText(e);
                     note.startChange();
                     mNoteLayout.addView(note);

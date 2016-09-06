@@ -78,7 +78,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@id/tv_hospital"
-                    android:text="床"
+                    android:text=" 床"
                     android:textColor="@color/choose_title"
                     android:textSize="20sp" />
 
