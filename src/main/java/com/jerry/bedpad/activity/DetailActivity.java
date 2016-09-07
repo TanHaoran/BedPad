@@ -132,7 +132,6 @@ public class DetailActivity extends AppCompatActivity {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            L.i("详细界面更新信息");
             setPatientData();
         }
     };

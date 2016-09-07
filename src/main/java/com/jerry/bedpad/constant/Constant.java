@@ -15,6 +15,7 @@ public class Constant {
 
 
     public static String IP = "";
+    public static String TCP = "";
 
 
     public static  long firstTime = 0;
@@ -69,7 +70,8 @@ public class Constant {
     /**
      * 体温数据服务端IP
      */
-    public static final String TEMPERATURE_SERVER_IP = "192.168.0.145";
+//    public static final String TEMPERATURE_SERVER_IP = "192.168.0.145";
+    public static String TEMPERATURE_SERVER_IP = "192.168.149.201";
     /**
      * 体温数据服务端端口
      */
