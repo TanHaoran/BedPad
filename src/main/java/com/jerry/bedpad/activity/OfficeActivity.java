@@ -69,7 +69,9 @@ public class OfficeActivity extends AppCompatActivity {
      */
     private void loadConfig() {
         String ip = (String) SPUtils.get(this, "ip", "http://192.168.0.100");
+        String tcp = (String) SPUtils.get(this, "tcp", "http://192.168.0.100");
         Constant.IP = ip;
+        Constant.TEMPERATURE_SERVER_IP = tcp;
     }
 
     @Override
@@ -119,7 +121,6 @@ public class OfficeActivity extends AppCompatActivity {
                     setData();
                 }
             }
-
         });
 
     }

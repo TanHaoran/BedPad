@@ -7,12 +7,14 @@
     android:focusableInTouchMode="true">
 
     <EditText
+        android:textColor="@color/white"
         android:id="@+id/edit_ip"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true" />
 
     <EditText
+        android:textColor="@color/white"
         android:layout_below="@id/edit_ip"
         android:id="@+id/edit_tcp"
         android:layout_width="300dp"

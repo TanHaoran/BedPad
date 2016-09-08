@@ -59,4 +59,6 @@ public class ConfigActivity extends AppCompatActivity {
         Constant.TEMPERATURE_SERVER_IP = tcp;
         finish();
     }
+
+
 }
