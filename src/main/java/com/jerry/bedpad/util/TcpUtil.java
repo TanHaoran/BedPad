@@ -103,8 +103,8 @@ public class TcpUtil {
     /**
      * 每过10s检测一次是否连接已经断开
      */
-    private Handler handler = new Handler();
-    private Runnable keepAlive = new Runnable() {
+    private Handler mHandler = new Handler();
+    private Runnable mKeepAlive = new Runnable() {
 
         @Override
         public void run() {
@@ -115,13 +115,13 @@ public class TcpUtil {
                     if (mSocket != null) {
                         mSocket.close();
                     }
-                    handler.removeCallbacks(keepAlive);
+                    mHandler.removeCallbacks(mKeepAlive);
                     L.i("重新连接。。。");
                     connect();
                 } else {
                     L.i("服务连接正常。。。");
                 }
-                handler.postDelayed(this, KEEP_ALIVE_TIME_OUT);
+                mHandler.postDelayed(this, KEEP_ALIVE_TIME_OUT);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -188,7 +188,7 @@ public class TcpUtil {
             }
         }).start();
 
-        handler.postDelayed(keepAlive, KEEP_ALIVE_TIME_OUT); //每隔10执行
+        mHandler.postDelayed(mKeepAlive, KEEP_ALIVE_TIME_OUT); //每隔10执行
     }
 
     /**
@@ -378,6 +378,7 @@ public class TcpUtil {
             @Override
             public void run() {
                 try {
+                    mHandler.removeCallbacks(mKeepAlive);
                     mSocket.close();
                     L.i("TCP连接已关闭");
                 } catch (Exception e) {

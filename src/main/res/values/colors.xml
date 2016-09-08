@@ -31,5 +31,11 @@
     <color name="food_text">#00b1ff</color>
     <color name="second_level">#ff3a53</color>
 
+    <!--体温-->
+    <color name="low">#ffffff</color>
+    <color name="normal">#62f250</color>
+    <color name="high">#ff8f3a</color>
+    <color name="super_high">#ff3a53</color>
+
 
 </resources>

@@ -21,6 +21,7 @@ import com.jerry.bedpad.bean.Patient;
 import com.jerry.bedpad.bean.TemperatureDevice;
 import com.jerry.bedpad.bluetooth.BluetoothUtil;
 import com.jerry.bedpad.constant.Constant;
+import com.jerry.bedpad.listener.OnDoubleClickListener;
 import com.jerry.bedpad.util.JsonUtil;
 import com.jerry.bedpad.util.L;
 import com.jerry.bedpad.util.MyCallBack;
@@ -81,6 +82,21 @@ public class MainActivity extends AppCompatActivity {
     private TextView mTextDoctor;
     @ViewInject(R.id.tv_nurse)
     private TextView mTextNurse;
+
+    /**
+     * 进入方式，用来识别是否重新绑定科室
+     */
+    public static final String ENTER_TYPE = "enter";
+
+
+    /**
+     * 0表示未绑定科室
+     */
+    public static final int ENTER_TYPE_INIT = 0;
+    /**
+     * 1表示已经有绑定的科室了
+     */
+    public static final int ENTER_TYPE_CHANGE = 1;
 
 
     /**
@@ -164,6 +180,21 @@ public class MainActivity extends AppCompatActivity {
         TcpUtil.getInstance(this).connect();
         // 检查更新
         // update();
+
+        /*******************************************************/
+        /*******************************************************/
+        /***********注册医院文字的双击事件，用来修改绑定科室***********/
+        /*******************************************************/
+        /*******************************************************/
+        mTextOffice.setOnTouchListener(new OnDoubleClickListener() {
+            @Override
+            protected void onDoubleClick() {
+                MyApplication.clearAll();
+                Intent intent = new Intent(MainActivity.this, OfficeActivity.class);
+                intent.putExtra(ENTER_TYPE, ENTER_TYPE_CHANGE);
+                startActivity(intent);
+            }
+        });
     }
 
 

@@ -77,8 +77,8 @@ public class OfficeActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        mEnterType = getIntent().getIntExtra(DetailActivity.ENTER_TYPE, -1);
-        if (mEnterType != DetailActivity.ENTER_TYPE_CHANGE) {
+        mEnterType = getIntent().getIntExtra(MainActivity.ENTER_TYPE, -1);
+        if (mEnterType != MainActivity.ENTER_TYPE_CHANGE) {
             loadSpInfo();
             if (!TextUtils.isEmpty(mOfficeId) && !TextUtils.isEmpty(mBedHisNumber)) {
                 finish();

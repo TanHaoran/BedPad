@@ -22,7 +22,6 @@ import com.jerry.bedpad.app.MyApplication;
 import com.jerry.bedpad.bean.Office;
 import com.jerry.bedpad.bean.TemperatureDevice;
 import com.jerry.bedpad.constant.Constant;
-import com.jerry.bedpad.listener.OnDoubleClickListener;
 import com.jerry.bedpad.util.DensityUtils;
 import com.jerry.bedpad.util.L;
 import com.jerry.bedpad.util.SPUtils;
@@ -37,18 +36,6 @@ import java.text.DecimalFormat;
 @ContentView(R.layout.activity_detail)
 public class DetailActivity extends AppCompatActivity {
 
-    /**
-     * 进入方式，用来识别是否重新绑定科室
-     */
-    public static final String ENTER_TYPE = "enter";
-    /**
-     * 0表示未绑定科室
-     */
-    public static final int ENTER_TYPE_INIT = 0;
-    /**
-     * 1表示已经有绑定的科室了
-     */
-    public static final int ENTER_TYPE_CHANGE = 1;
 
     @ViewInject(R.id.tv_hospital)
     private TextView mTextHospital;
@@ -236,20 +223,6 @@ public class DetailActivity extends AppCompatActivity {
             }
         }
 
-        /*******************************************************/
-        /*******************************************************/
-        /***********注册医院文字的双击事件，用来修改绑定科室***********/
-        /*******************************************************/
-        /*******************************************************/
-        mTextOffice.setOnTouchListener(new OnDoubleClickListener() {
-            @Override
-            protected void onDoubleClick() {
-                MyApplication.clearAll();
-                Intent intent = new Intent(DetailActivity.this, OfficeActivity.class);
-                intent.putExtra(ENTER_TYPE, ENTER_TYPE_CHANGE);
-                startActivity(intent);
-            }
-        });
     }
 
 
@@ -370,6 +343,15 @@ public class DetailActivity extends AppCompatActivity {
         mTextTemperatureState.setVisibility(View.VISIBLE);
         // 设置体温值
         String value = formatValue(d.getTemperature());
+        if (d.getTemperature() <= 36) {
+            mValue.setTextColor(getResources().getColor(R.color.white));
+        } else if (d.getTemperature() >= 38) {
+            mValue.setTextColor(getResources().getColor(R.color.super_high));
+        } else if (d.getTemperature() >= 37.5) {
+            mValue.setTextColor(getResources().getColor(R.color.high));
+        } else {
+            mValue.setTextColor(getResources().getColor(R.color.normal));
+        }
         mValue.setText(value);
         // 设置电量值
         int battery = d.getBatteryPower();

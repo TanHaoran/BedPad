@@ -118,6 +118,15 @@ public class TemperatureActivity extends AppCompatActivity {
         mTextDeviceId.setText(Constant.DEVICE.getId());
         // 设置体温值
         String value = formatValue(d.getTemperature());
+        if (d.getTemperature() <= 36) {
+            mValue.setTextColor(getResources().getColor(R.color.white));
+        } else if (d.getTemperature() >= 38) {
+            mValue.setTextColor(getResources().getColor(R.color.super_high));
+        } else if (d.getTemperature() >= 37.5) {
+            mValue.setTextColor(getResources().getColor(R.color.high));
+        } else {
+            mValue.setTextColor(getResources().getColor(R.color.normal));
+        }
         mValue.setText(value);
         // 设置电量值
         int battery = d.getBatteryPower();
