@@ -15,6 +15,7 @@
     <string name="history">过敏史：</string>
     <string name="doctor">主管医生：</string>
     <string name="nurse">责任护士：</string>
+    <string name="cancel">取消</string>
 
     <!--详细-->
     <string name="sex">性别：</string>

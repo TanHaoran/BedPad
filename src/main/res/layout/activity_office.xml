@@ -27,17 +27,18 @@
         android:textColor="@color/choose_bed"
         android:textSize="20dp" />
 
-    <ListView
+    <GridView
         android:divider="@color/office_check"
         android:dividerHeight="1dp"
-        android:id="@+id/listview"
+        android:id="@+id/gridvew"
+        android:numColumns="4"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/btn_ok"
         android:layout_below="@id/tv_title"
         android:layout_marginBottom="25dp"
-        android:layout_marginLeft="200dp"
-        android:layout_marginRight="200dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
         android:layout_marginTop="5dp" />
 
 

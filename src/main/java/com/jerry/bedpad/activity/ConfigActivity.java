@@ -18,8 +18,11 @@ import org.xutils.view.annotation.ViewInject;
 @ContentView(R.layout.activity_config)
 public class ConfigActivity extends AppCompatActivity {
 
-    @ViewInject(R.id.edit)
-    private EditText mTextIp;
+    @ViewInject(R.id.edit_ip)
+    private EditText mTextService;
+
+    @ViewInject(R.id.edit_tcp)
+    private EditText mTextTcp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,10 +33,16 @@ public class ConfigActivity extends AppCompatActivity {
 
     private void loadConfig() {
         String ip = (String) SPUtils.get(this, "ip", "");
+        String tcp = (String) SPUtils.get(this, "tcp", "");
         if (TextUtils.isEmpty(ip)) {
             ip = "http://192.168.0.100";
         }
-        mTextIp.setText(ip);
+
+        if (TextUtils.isEmpty(tcp)) {
+            tcp = "192.168.149.201";
+        }
+        mTextService.setText(ip);
+        mTextTcp.setText(tcp);
     }
 
     @Event(R.id.btn_ok)
@@ -42,9 +51,12 @@ public class ConfigActivity extends AppCompatActivity {
     }
 
     private void saveConfig() {
-        String ip = mTextIp.getText().toString();
+        String ip = mTextService.getText().toString();
+        String tcp = mTextTcp.getText().toString();
         SPUtils.put(this, "ip", ip);
+        SPUtils.put(this, "tcp", tcp);
         Constant.IP = ip;
+        Constant.TEMPERATURE_SERVER_IP = tcp;
         finish();
     }
 }

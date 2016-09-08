@@ -57,7 +57,9 @@ public class TemperatureActivity extends AppCompatActivity {
     @ViewInject(R.id.ll_battery)
     private LinearLayout mBatteryLayout;
 
-    private String mDeviceId;
+    @ViewInject(R.id.tv_device_id)
+    private TextView mTextDeviceId;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,6 +114,8 @@ public class TemperatureActivity extends AppCompatActivity {
         // 设置可见
         mBatteryLayout.setVisibility(View.VISIBLE);
         mTextTemperatureState.setVisibility(View.VISIBLE);
+        // 设置设备Id
+        mTextDeviceId.setText(Constant.DEVICE.getId());
         // 设置体温值
         String value = formatValue(d.getTemperature());
         mValue.setText(value);

@@ -132,7 +132,6 @@ public class DetailActivity extends AppCompatActivity {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            L.i("详细界面更新信息");
             setPatientData();
         }
     };
@@ -266,7 +265,7 @@ public class DetailActivity extends AppCompatActivity {
             // 护理事件的添加
             String event = Constant.PATIENT.getEvent();
             if (!TextUtils.isEmpty(event)) {
-                String[] events = event.split("\\ |");
+                String[] events = event.split("\\|");
                 int length = events.length;
                 if (length > 0) {
                     fillData(levelText, 0xbbf93c3c, false);
@@ -275,12 +274,12 @@ public class DetailActivity extends AppCompatActivity {
                         textView.setText(events[i]);
                         if (i == length - 1) {
                             if (!TextUtils.isEmpty(Constant.PATIENT.getFood())) {
-                                fillData(textView, 0xbbf93c3c, false);
+                                fillData(textView, 0xbb00b1ff, false);
                             } else {
-                                fillData(textView, 0xbbf93c3c, true);
+                                fillData(textView, 0xbb00b1ff, true);
                             }
                         } else {
-                            fillData(textView, 0xbbf93c3c, false);
+                            fillData(textView, 0xbb00b1ff, false);
                         }
                     }
                 } else {

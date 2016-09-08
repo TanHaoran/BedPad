@@ -56,7 +56,6 @@ public class TemperatureDevice extends Device implements Serializable {
     private String address;
 
 
-
     public int getDeviceSerialNumber() {
         return deviceSerialNumber;
     }
@@ -128,6 +127,7 @@ public class TemperatureDevice extends Device implements Serializable {
     public void setAddress(String address) {
         this.address = address;
     }
+
 
     @Override
     public String toString() {

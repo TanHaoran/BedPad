@@ -100,6 +100,15 @@
 
     </LinearLayout>
 
+    <TextView
+        android:layout_marginLeft="@dimen/detail_space"
+        android:textColor="@color/choose_title"
+        android:textSize="@dimen/temperature_detail_state"
+        android:id="@+id/tv_device_id"
+        android:layout_above="@id/ll_battery"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
     <ImageView
         android:id="@+id/iv_bluetooth"
         android:layout_width="wrap_content"

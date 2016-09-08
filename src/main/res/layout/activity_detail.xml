@@ -68,9 +68,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:text=""
+                    android:text="32"
                     android:textColor="@color/white"
-                    android:textSize="50sp" />
+                    android:textSize="46sp" />
 
                 <TextView
                     android:id="@+id/tv_bed"
@@ -78,7 +78,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@id/tv_hospital"
-                    android:text="床"
+                    android:text=" 床"
                     android:textColor="@color/choose_title"
                     android:textSize="20sp" />
 

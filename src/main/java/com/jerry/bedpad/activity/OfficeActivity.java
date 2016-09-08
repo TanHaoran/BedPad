@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ListView;
+import android.widget.GridView;
 
 import com.jerry.bedpad.R;
 import com.jerry.bedpad.adapter.CommonCallbackAdapter;
@@ -36,8 +36,8 @@ import java.util.List;
 public class OfficeActivity extends AppCompatActivity {
 
 
-    @ViewInject(R.id.listview)
-    private ListView mListView;
+    @ViewInject(R.id.gridvew)
+    private GridView mGridView;
 
     private List<Office> mOffices = new ArrayList<>();
     private OfficeAdapter mAdapter;
@@ -130,8 +130,8 @@ public class OfficeActivity extends AppCompatActivity {
      */
     private void setData() {
         mAdapter = new OfficeAdapter(this, mOffices, R.layout.item_office);
-        mListView.setAdapter(mAdapter);
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mGridView.setAdapter(mAdapter);
+        mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 mSelected = true;

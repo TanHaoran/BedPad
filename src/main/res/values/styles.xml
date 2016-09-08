@@ -19,4 +19,13 @@
         <item name="android:activityCloseExitAnimation">@anim/activity_fade_out</item>
     </style>
 
+
+    <!-- 各类窗口形式的Activity -->
+    <style name="MyTransparent" parent="android:style/Theme.Dialog">
+        <item name="android:windowBackground">@drawable/round</item>
+        <item name="android:windowCloseOnTouchOutside">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
 </resources>
