@@ -120,8 +120,8 @@ public class TcpUtil {
                     connect();
                 } else {
                     L.i("服务连接正常。。。");
+                    mHandler.postDelayed(this, KEEP_ALIVE_TIME_OUT);
                 }
-                mHandler.postDelayed(this, KEEP_ALIVE_TIME_OUT);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -267,13 +267,13 @@ public class TcpUtil {
      * @param length 有效长度
      */
     private void parseResult(byte[] buffer, int length) {
-        if (length != 7) {
-            L.i("长度不符合");
-            return;
-        } else if (!(buffer[0] == 0x55 && buffer[1] == 0x50 && buffer[length - 2] == 0x55 && buffer[length - 1] == 0x5f)) {
+        if (!(buffer[0] == 0x55 && buffer[1] == 0x50 && buffer[length - 2] == 0x55 && buffer[length - 1] == 0x5f)) {
             L.i("内容不符合");
             return;
         } else {
+            if (length != 7) {
+                L.i("长度不符合，有粘包");
+            }
             // 根据不同的指令进行分类
             switch (buffer[2]) {
                 /**
