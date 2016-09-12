@@ -23,8 +23,9 @@ import com.jerry.bedpad.bean.Office;
 import com.jerry.bedpad.bean.TemperatureDevice;
 import com.jerry.bedpad.constant.Constant;
 import com.jerry.bedpad.util.DensityUtils;
-import com.jerry.bedpad.util.L;
+import com.jerry.bedpad.util.NetUtil;
 import com.jerry.bedpad.util.SPUtils;
+import com.jerry.bedpad.util.TcpUtil;
 import com.jerry.bedpad.view.RippleBackground;
 
 import org.xutils.view.annotation.ContentView;
@@ -74,6 +75,11 @@ public class DetailActivity extends AppCompatActivity {
     @ViewInject(R.id.tv_food)
     private TextView mTextFood;
 
+    @ViewInject(R.id.tv_temperature_text)
+    private TextView mTemperatureText;
+    @ViewInject(R.id.tv_drip_text)
+    private TextView mDripText;
+
     @ViewInject(R.id.ll_note)
     private LinearLayout mNoteLayout;
 
@@ -115,11 +121,52 @@ public class DetailActivity extends AppCompatActivity {
     public static final String GET_BLUETOOTH_VALUE = "com.jerry.bluetooth.value";
 
 
+    /**
+     * 更新病患信息
+     */
+    private static final int UPDATE_PATIENT_DATA = 0x0001;
+    /**
+     * 更新TCP连接状态
+     */
+    private static final int UPDATE_CONNECT_STATE = 0x0002;
+
+    /**
+     * 没有网络的状态
+     */
+    private static final int NO_NET = -1;
+    /**
+     * 没有连接上的状态
+     */
+    private static final int DISCONNECT = 0;
+    /**
+     * 连接上的状态
+     */
+    private static final int CONNECT = 1;
+
+
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            setPatientData();
+            switch (msg.what) {
+                case UPDATE_PATIENT_DATA:
+                    setPatientData();
+                    break;
+                case UPDATE_CONNECT_STATE:
+                    boolean isClose = (boolean) msg.obj;
+                    if (!NetUtil.isWifiConnected(DetailActivity.this)) {
+                        mTemperatureText.setTextColor(getResources().getColor(R.color.white));
+                        mDripText.setTextColor(getResources().getColor(R.color.white));
+                    } else {
+                        if (isClose) {
+                            mTemperatureText.setTextColor(getResources().getColor(R.color.name_text_male));
+                            mDripText.setTextColor(getResources().getColor(R.color.name_text_male));
+                        } else {
+                            mTemperatureText.setTextColor(getResources().getColor(R.color.normal));
+                            mDripText.setTextColor(getResources().getColor(R.color.normal));
+                        }
+                    }
+                    break;
+            }
         }
     };
 
@@ -135,6 +182,7 @@ public class DetailActivity extends AppCompatActivity {
         @Override
         public void run() {
             Message msg = mHandler.obtainMessage();
+            msg.what = UPDATE_PATIENT_DATA;
             msg.sendToTarget();
             // 每隔DEFAULT_UPDATE_PATIENT_INFO_TIME时间，进行重新获取温度数据
             mHandler.postDelayed(mUpdateInfo, DEFAULT_UPDATE_PATIENT_INFO_TIME);
@@ -156,8 +204,28 @@ public class DetailActivity extends AppCompatActivity {
         mHandler.post(mUpdateInfo);
         // 注册广播用来接收蓝牙数据
         initReceiver();
-        DensityUtils.setBrightness(this, 255);
-        L.i("屏幕的亮度为：" + DensityUtils.getScreenBrightness(this));
+//        DensityUtils.setBrightness(this, 255);
+//        L.i("屏幕的亮度为：" + DensityUtils.getScreenBrightness(this));
+        // 设置TCP回调方法
+        TcpUtil.getInstance(this).setOnCheckClose(new TcpUtil.OnCheckClose() {
+            @Override
+            public void checkClose(boolean isClose) {
+                Message msg = new Message();
+                msg.what = UPDATE_CONNECT_STATE;
+                msg.obj = isClose;
+                mHandler.sendMessage(msg);
+            }
+        });
+        // 一进来先检测服务是否连接
+        checkServerConnect();
+    }
+
+    private void checkServerConnect() {
+        boolean isClose = TcpUtil.getInstance(this).isServerClose();
+        Message msg = new Message();
+        msg.what = UPDATE_CONNECT_STATE;
+        msg.obj = isClose;
+        mHandler.sendMessage(msg);
     }
 
 

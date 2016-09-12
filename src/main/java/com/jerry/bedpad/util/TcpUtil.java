@@ -89,11 +89,21 @@ public class TcpUtil {
     private static final int TIME_OUT = 10 * 1000;
 
     /**
-     * 每隔10s检测连接是否断开
+     * 每隔60s检测连接是否断开
      */
-    private static final int KEEP_ALIVE_TIME_OUT = 10 * 1000;
+    private static final int KEEP_ALIVE_TIME_OUT = 60 * 1000;
 
     private Context mContext;
+
+    public interface OnCheckClose {
+        void checkClose(boolean isClose);
+    }
+
+    private OnCheckClose mOnCheckClose;
+
+    public void setOnCheckClose(OnCheckClose onCheckClose) {
+        mOnCheckClose = onCheckClose;
+    }
 
     private TcpUtil(Context context) {
         mContext = context;
@@ -110,17 +120,21 @@ public class TcpUtil {
         public void run() {
             try {
                 L.i("检测服务是否连接。。。");
-                if (isServerClose()) {
-                    L.i("服务连接已经断开。。。");
-                    if (mSocket != null) {
-                        mSocket.close();
+                if (mOnCheckClose != null) {
+                    if (isServerClose()) {
+                        L.i("服务连接已经断开。。。");
+                        mOnCheckClose.checkClose(true);
+                        if (mSocket != null) {
+                            mSocket.close();
+                        }
+                        mHandler.removeCallbacks(mKeepAlive);
+                        L.i("重新连接。。。");
+                        connect();
+                    } else {
+                        L.i("服务连接正常。。。");
+                        mOnCheckClose.checkClose(false);
+                        mHandler.postDelayed(this, KEEP_ALIVE_TIME_OUT);
                     }
-                    mHandler.removeCallbacks(mKeepAlive);
-                    L.i("重新连接。。。");
-                    connect();
-                } else {
-                    L.i("服务连接正常。。。");
-                    mHandler.postDelayed(this, KEEP_ALIVE_TIME_OUT);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -298,9 +312,9 @@ public class TcpUtil {
     private void generatedMessage() {
 
         try {
-            if (Constant.DEVICE != null) {
+            if (Constant.TEMPERATURE_DEVICE != null) {
 
-                int receiveLength = Constant.DEVICE.getReceive().length + 9;
+                int receiveLength = Constant.TEMPERATURE_DEVICE.getReceive().length + 9;
                 int length = receiveLength + 6;
                 /***********************
                  * 构建数据，发送设备蓝牙数据
@@ -317,19 +331,19 @@ public class TcpUtil {
                  * 构建data数据（0位：信号强度，1位：是否开启白名单，2位：MAC类型，3~8位：MAC地址，其它：数据）
                  */
                 // 信号强度
-                message[4] = (byte) Math.abs(Constant.DEVICE.getRssi());
+                message[4] = (byte) Math.abs(Constant.TEMPERATURE_DEVICE.getRssi());
                 // 是否开启白名单
                 message[5] = 0x01;
                 // MAC类型
-                message[6] = (byte) Constant.DEVICE.getMacType();
+                message[6] = (byte) Constant.TEMPERATURE_DEVICE.getMacType();
                 // MAC地址
-                String[] mac = Constant.DEVICE.getAddress().split(":");
+                String[] mac = Constant.TEMPERATURE_DEVICE.getAddress().split(":");
                 for (int i = 7; i <= 12; i++) {
                     message[i] = (byte) Integer.parseInt((mac[i - 7]), 16);
                 }
                 // data数据
                 for (int i = 13; i <= length - 3; i++) {
-                    message[i] = Constant.DEVICE.getReceive()[i - 13];
+                    message[i] = Constant.TEMPERATURE_DEVICE.getReceive()[i - 13];
                 }
                 // 报文结尾
                 message[length - 2] = 0x55;

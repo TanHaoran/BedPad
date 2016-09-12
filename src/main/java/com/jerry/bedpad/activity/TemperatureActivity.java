@@ -115,7 +115,7 @@ public class TemperatureActivity extends AppCompatActivity {
         mBatteryLayout.setVisibility(View.VISIBLE);
         mTextTemperatureState.setVisibility(View.VISIBLE);
         // 设置设备Id
-        mTextDeviceId.setText(Constant.DEVICE.getId());
+        mTextDeviceId.setText(Constant.TEMPERATURE_DEVICE.getId());
         // 设置体温值
         String value = formatValue(d.getTemperature());
         if (d.getTemperature() <= 36) {

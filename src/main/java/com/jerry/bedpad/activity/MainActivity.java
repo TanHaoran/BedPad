@@ -106,11 +106,13 @@ public class MainActivity extends AppCompatActivity {
 
     private Handler mHandler = new Handler();
 
+    private boolean isBluetoothStart = false;
+
 
     /**
-     * 默认每10分钟更新一次体温数据
+     * 默认每60分钟更新一次体温数据
      */
-    private static final int DEFAULT_UPDATE_PATIENT_INFO_TIME = 10 * 60 * 1000;
+    private static final int DEFAULT_UPDATE_PATIENT_INFO_TIME = 1 * 60 * 1000;
 
     /**
      * 定时监听体温线程
@@ -120,6 +122,8 @@ public class MainActivity extends AppCompatActivity {
         public void run() {
             // 读取病患信息
             loadPatientInfo(mOfficeId, mBedHisNumber);
+            // 读取绑定的设备信息
+            loadDeviceSp(mOfficeId, mBedHisNumber);
             // 每隔DEFAULT_UPDATE_PATIENT_INFO_TIME时间，进行重新获取温度数据
             mHandler.postDelayed(mUpdateInfo, DEFAULT_UPDATE_PATIENT_INFO_TIME);
         }
@@ -142,8 +146,8 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onLeScan(TemperatureDevice blueInfo) {
                     // 如果搜索到的设备id和保存的保定的设备id一致，则发送广播
-                    if (mDeviceId.equals(blueInfo.getId())) {
-                        Constant.DEVICE = blueInfo;
+                    if (blueInfo.getId().equals(mDeviceId)) {
+                        Constant.TEMPERATURE_DEVICE = blueInfo;
                         Intent intent = new Intent(TemperatureActivity.GET_BLUETOOTH_VALUE);
                         Bundle b = new Bundle();
                         b.putSerializable(TemperatureDevice.DEVICE, blueInfo);
@@ -176,10 +180,12 @@ public class MainActivity extends AppCompatActivity {
         loadData();
         // 蓝牙相关操作
         bluetoothWork();
-//        // TCP连接
+        // TCP设置毁掉并连接
         TcpUtil.getInstance(this).connect();
         // 检查更新
         // update();
+        // 开始搜索蓝牙设备
+        startMonitor();
 
         /*******************************************************/
         /*******************************************************/
@@ -212,8 +218,6 @@ public class MainActivity extends AppCompatActivity {
             mHandler.post(mUpdateInfo);
 //            loadPatientInfo(mOfficeId, mBedHisNumber);
         }
-        // 读取绑定的设备信息
-        loadDeviceSp(mOfficeId, mBedHisNumber);
     }
 
 
@@ -303,9 +307,28 @@ public class MainActivity extends AppCompatActivity {
         for (Device d : devices) {
             if (d.getType().equals(Device.TYPE_TEMPERATURE)) {
                 mDeviceId = Device.TYPE_TEMPERATURE_RAINBOW_ID_PREFIX + d.getId();
-                startMonitor();
+                if (!isBluetoothStart) {
+                    startMonitor();
+                }
+                return;
             }
         }
+        // 如果没有物联设备信息就清空之前的数据
+        clearDeviceInfo();
+    }
+
+    /**
+     * 清空之前物联设备的数据
+     */
+    private void clearDeviceInfo() {
+        Constant.TEMPERATURE_DEVICE = new TemperatureDevice();
+        Intent intent = new Intent(TemperatureActivity.GET_BLUETOOTH_VALUE);
+        Bundle b = new Bundle();
+        b.putSerializable(TemperatureDevice.DEVICE, Constant.TEMPERATURE_DEVICE);
+        intent.putExtra("bundle", b);
+        sendBroadcast(intent);
+        mHandler.removeCallbacks(mMonitor);
+        isBluetoothStart = false;
     }
 
 
@@ -314,10 +337,11 @@ public class MainActivity extends AppCompatActivity {
      */
     private void startMonitor() {
         // 如果蓝牙准备好就开始监测
-        if (BluetoothUtil.ready(this, mDeviceId)) {
+        if (BluetoothUtil.ready(this)) {
             // 开始搜索蓝牙设备
             mHandler.removeCallbacks(mMonitor);
             mHandler.post(mMonitor);
+            isBluetoothStart = true;
         }
 
     }
@@ -478,7 +502,7 @@ public class MainActivity extends AppCompatActivity {
     private void onMain(View v) {
         Intent intent = new Intent(this, DetailActivity.class);
         Bundle b = new Bundle();
-        b.putSerializable(TemperatureDevice.DEVICE, Constant.DEVICE);
+        b.putSerializable(TemperatureDevice.DEVICE, Constant.TEMPERATURE_DEVICE);
         intent.putExtra("bundle", b);
         startActivity(intent);
     }

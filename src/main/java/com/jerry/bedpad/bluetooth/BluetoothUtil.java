@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.jerry.bedpad.bean.TemperatureDevice;
 import com.jerry.bedpad.util.L;
@@ -386,19 +387,12 @@ public class BluetoothUtil extends BluetoothProtocol {
      * @param context
      * @return
      */
-    public static boolean ready(Context context, String deviceId) {
+    public static boolean ready(Context context) {
         // 检测蓝牙是否打开
-        if (BluetoothUtil.getInstance().isBluetoothOpen()) {
-            if (TextUtils.isEmpty(deviceId)) {
-                T.showLong(context, "蓝牙设备未绑定");
-                return false;
-            } else {
-                return true;
-            }
-        } else {
-            T.showLong(context, "蓝牙未打开");
+        if (!BluetoothUtil.getInstance().isBluetoothOpen()) {
             return false;
         }
+        return true;
     }
 
     /**

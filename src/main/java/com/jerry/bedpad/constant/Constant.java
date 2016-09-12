@@ -11,7 +11,7 @@ public class Constant {
 
     public static Patient PATIENT;
 
-    public static TemperatureDevice DEVICE;
+    public static TemperatureDevice TEMPERATURE_DEVICE;
 
 
     public static String IP = "";
