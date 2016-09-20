@@ -10,7 +10,7 @@
     <!--主页-->
     <string name="name">姓名：</string>
     <string name="age">年龄：</string>
-    <string name="in_date">入院日期：</string>
+    <string name="in_date">入院：</string>
     <string name="hos_id">住院号：</string>
     <string name="history">过敏史：</string>
     <string name="doctor">主管医生：</string>

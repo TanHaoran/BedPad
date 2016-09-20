@@ -146,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onLeScan(TemperatureDevice blueInfo) {
                     // 如果搜索到的设备id和保存的保定的设备id一致，则发送广播
-                    if (blueInfo.getId().equals(mDeviceId)) {
+                    if (blueInfo.getId().endsWith(mDeviceId)) {
                         Constant.TEMPERATURE_DEVICE = blueInfo;
                         Intent intent = new Intent(TemperatureActivity.GET_BLUETOOTH_VALUE);
                         Bundle b = new Bundle();
@@ -306,7 +306,8 @@ public class MainActivity extends AppCompatActivity {
         // 查找匹配体温设备信息
         for (Device d : devices) {
             if (d.getType().equals(Device.TYPE_TEMPERATURE)) {
-                mDeviceId = Device.TYPE_TEMPERATURE_RAINBOW_ID_PREFIX + d.getId();
+//                mDeviceId = Device.TYPE_TEMPERATURE_RAINBOW_ID_PREFIX + d.getId();
+                mDeviceId = d.getId();
                 if (!isBluetoothStart) {
                     startMonitor();
                 }

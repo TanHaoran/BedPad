@@ -10,6 +10,7 @@
     <!--主页-->
     <dimen name="hospital_text">44sp</dimen>
     <dimen name="patient_info_text">42sp</dimen>
+    <dimen name="patient_info_date_text">28sp</dimen>
     <dimen name="patient_info_name_text">48sp</dimen>
     <dimen name="patient_info_line_height">62dp</dimen>
     <dimen name="note_marginLeft">20dp</dimen>

@@ -73,9 +73,10 @@
         android:padding="20dp">
 
         <LinearLayout
-            android:layout_centerVertical="true"
+            android:id="@+id/ll_info"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_centerVertical="true"
             android:orientation="vertical">
 
             <LinearLayout
@@ -139,7 +140,7 @@
                     android:layout_height="wrap_content"
                     android:text=""
                     android:textColor="@color/choose_title"
-                    android:textSize="@dimen/patient_info_text" />
+                    android:textSize="@dimen/patient_info_date_text" />
             </LinearLayout>
 
             <LinearLayout
@@ -176,7 +177,6 @@
                     android:textSize="@dimen/patient_info_text" />
 
                 <TextView
-
                     android:id="@+id/tv_history"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -228,52 +228,28 @@
             </LinearLayout>
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/ll_note"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
+        <HorizontalScrollView
+            android:padding="10dp"
+            android:background="@drawable/note_hs_bg"
+            android:fillViewport="true"
+            android:layout_marginLeft="20dp"
             android:layout_marginBottom="20dp"
             android:layout_marginTop="20dp"
-            android:orientation="horizontal">
+            android:layout_width="wrap_content"
+            android:layout_toRightOf="@id/ll_info"
+            android:layout_alignParentRight="true"
+            android:layout_height="match_parent">
 
-            <!--<com.jerry.bedpad.view.NoteView-->
-            <!--android:layout_width="@dimen/note_width"-->
-            <!--android:layout_height="match_parent"-->
-            <!--jerry:duration="800"-->
-            <!--jerry:from_color="#f93c3c"-->
-            <!--jerry:text="II级护理"-->
-            <!--jerry:to_color="#ed7878" />-->
+            <LinearLayout
+                android:layout_toRightOf="@id/ll_info"
+                android:layout_alignParentRight="true"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="right"
+                android:id="@+id/ll_note"
+                android:orientation="horizontal" />
+        </HorizontalScrollView>
 
-            <!--<com.jerry.bedpad.view.NoteView-->
-            <!--android:layout_width="@dimen/note_width"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_marginLeft="@dimen/note_marginLeft"-->
-            <!--jerry:duration="4000"-->
-            <!--jerry:from_color="#fc7cd3"-->
-            <!--jerry:text="低盐低脂糖尿病饮食"-->
-            <!--jerry:to_color="#f7a5dd" />-->
-
-            <!--<com.jerry.bedpad.view.NoteView-->
-            <!--android:layout_width="@dimen/note_width"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_marginLeft="@dimen/note_marginLeft"-->
-            <!--jerry:duration="3500"-->
-            <!--jerry:from_color="#fff654"-->
-            <!--jerry:text="误吸盐"-->
-            <!--jerry:to_color="#f7fa9e" />-->
-
-
-            <!--<com.jerry.bedpad.view.NoteView-->
-            <!--android:layout_width="@dimen/note_width"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_marginLeft="@dimen/note_marginLeft"-->
-            <!--jerry:from_color="#00aFFE"-->
-            <!--jerry:text="防跌倒"-->
-            <!--jerry:to_color="#69C8EC" />-->
-
-
-        </LinearLayout>
     </RelativeLayout>
 
 </LinearLayout>
