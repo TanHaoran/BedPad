@@ -3,6 +3,7 @@ package com.jerry.bedpad.activity;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +17,7 @@ import com.jerry.bedpad.adapter.CommonCallbackAdapter;
 import com.jerry.bedpad.app.MyApplication;
 import com.jerry.bedpad.bean.Bed;
 import com.jerry.bedpad.bean.Device;
+import com.jerry.bedpad.bean.Note;
 import com.jerry.bedpad.bean.Office;
 import com.jerry.bedpad.bean.Patient;
 import com.jerry.bedpad.bean.TemperatureDevice;
@@ -146,13 +148,16 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onLeScan(TemperatureDevice blueInfo) {
                     // 如果搜索到的设备id和保存的保定的设备id一致，则发送广播
-                    if (blueInfo.getId().endsWith(mDeviceId)) {
-                        Constant.TEMPERATURE_DEVICE = blueInfo;
-                        Intent intent = new Intent(TemperatureActivity.GET_BLUETOOTH_VALUE);
-                        Bundle b = new Bundle();
-                        b.putSerializable(TemperatureDevice.DEVICE, blueInfo);
-                        intent.putExtra("bundle", b);
-                        sendBroadcast(intent);
+                    if (!TextUtils.isEmpty(mDeviceId)) {
+                        if (blueInfo.getId().endsWith(mDeviceId)) {
+                            Constant.TEMPERATURE_DEVICE = blueInfo;
+                            Intent intent = new Intent(TemperatureActivity.GET_BLUETOOTH_VALUE);
+                            Bundle b = new Bundle();
+                            b.putSerializable(TemperatureDevice.DEVICE, blueInfo);
+                            intent.putExtra("bundle", b);
+                            sendBroadcast(intent);
+                        }
+
                     }
                 }
             });
@@ -424,6 +429,16 @@ public class MainActivity extends AppCompatActivity {
             foodView.setText(patient.getFood());
             foodView.startChange();
             mNoteLayout.addView(foodView);
+        }
+        // 便签的构造
+        if (!JsonUtil.isEmpty(patient.getNoteList())) {
+            for(Note n:patient.getNoteList()) {
+                NoteView noteView = new NoteView(this);
+                noteView.setFromColor(Color.parseColor(n.getColor()));
+                noteView.setToColor(Color.parseColor(n.getColor()));
+                noteView.setText(n.getName());
+                mNoteLayout.addView(noteView);
+            }
         }
     }
 

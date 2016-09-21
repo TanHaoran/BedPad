@@ -19,10 +19,12 @@ import android.widget.TextView;
 
 import com.jerry.bedpad.R;
 import com.jerry.bedpad.app.MyApplication;
+import com.jerry.bedpad.bean.Note;
 import com.jerry.bedpad.bean.Office;
 import com.jerry.bedpad.bean.TemperatureDevice;
 import com.jerry.bedpad.constant.Constant;
 import com.jerry.bedpad.util.DensityUtils;
+import com.jerry.bedpad.util.JsonUtil;
 import com.jerry.bedpad.util.NetUtil;
 import com.jerry.bedpad.util.SPUtils;
 import com.jerry.bedpad.util.TcpUtil;
@@ -303,47 +305,34 @@ public class DetailActivity extends AppCompatActivity {
             mNoteLayout.removeAllViews();
             TextView levelText = new TextView(this);
             levelText.setText(Constant.PATIENT.getLevel());
+            fillData(levelText, 0xbbf93c3c, true);
             // 护理事件的添加
             String event = Constant.PATIENT.getEvent();
             if (!TextUtils.isEmpty(event)) {
                 String[] events = event.split("\\|");
                 int length = events.length;
                 if (length > 0) {
-                    fillData(levelText, 0xbbf93c3c, false);
                     for (int i = 0; i < length; i++) {
                         TextView textView = new TextView(this);
                         textView.setText(events[i]);
-                        if (i == length - 1) {
-                            if (!TextUtils.isEmpty(Constant.PATIENT.getFood())) {
-                                fillData(textView, 0xbb00b1ff, false);
-                            } else {
-                                fillData(textView, 0xbb00b1ff, true);
-                            }
-                        } else {
-                            fillData(textView, 0xbb00b1ff, false);
-                        }
+                        fillData(textView, 0xbb00b1ff, false);
                     }
-                } else {
-                    if (!TextUtils.isEmpty(Constant.PATIENT.getFood())) {
-                        fillData(levelText, 0xbbf93c3c, false);
-                    } else {
-                        fillData(levelText, 0xbbf93c3c, true);
-                    }
-                }
-            } else {
-                if (!TextUtils.isEmpty(Constant.PATIENT.getFood())) {
-                    fillData(levelText, 0xbbf93c3c, false);
-                } else {
-                    fillData(levelText, 0xbbf93c3c, true);
                 }
             }
             // 饮食板块添加
             if (!TextUtils.isEmpty(Constant.PATIENT.getFood())) {
                 TextView foodView = new TextView(this);
                 foodView.setText(Constant.PATIENT.getFood());
-                fillData(foodView, 0xbb00b1ff, true);
+                fillData(foodView, 0xbb00b1ff, false);
             }
-
+            // 便签内容添加
+            if (!JsonUtil.isEmpty(Constant.PATIENT.getNoteList())) {
+                for (Note n : Constant.PATIENT.getNoteList()) {
+                    TextView noteView = new TextView(this);
+                    noteView.setText(n.getName());
+                    fillData(noteView, Color.parseColor(n.getColor()), false);
+                }
+            }
         }
     }
 
@@ -353,14 +342,14 @@ public class DetailActivity extends AppCompatActivity {
      *
      * @param v       需要填充的View
      * @param bgColor 背景颜色
-     * @param isLast  是否是最后一个元素
+     * @param isFirst 是否是第一个一个元素
      */
-    private void fillData(View v, int bgColor, boolean isLast) {
+    private void fillData(View v, int bgColor, boolean isFirst) {
         v.setBackgroundColor(bgColor);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0);
         lp.weight = 1;
-        if (!isLast) {
-            lp.setMargins(0, 0, 0, DensityUtils.dp2px(this, 15));
+        if (!isFirst) {
+            lp.setMargins(0, DensityUtils.dp2px(this, 15), 0, 0);
         }
         v.setLayoutParams(lp);
         TextView textView = (TextView) v;

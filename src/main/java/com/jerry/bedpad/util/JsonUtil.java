@@ -2,6 +2,7 @@ package com.jerry.bedpad.util;
 
 import com.jerry.bedpad.bean.Bed;
 import com.jerry.bedpad.bean.Device;
+import com.jerry.bedpad.bean.Note;
 import com.jerry.bedpad.bean.Office;
 import com.jerry.bedpad.bean.Patient;
 
@@ -182,6 +183,16 @@ public class JsonUtil {
             } else {
                 p.setHistory("");
             }
+            // 获取标签
+            JSONArray notes = data.getJSONArray("lblmsg");
+            for (int i = 0; i < notes.length(); i++) {
+                Note n = new Note();
+                String noteName = notes.getJSONObject(i).getString("LableText");
+                String noteColor = notes.getJSONObject(i).getString("LableColor");
+                n.setName(noteName);
+                n.setColor(noteColor);
+                p.getNoteList().add(n);
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -217,6 +228,12 @@ public class JsonUtil {
     }
 
 
+    /**
+     * 过滤不必要的字符串
+     *
+     * @param json
+     * @return
+     */
     public static String filterJson(String json) {
         String result = "";
         if (json.length() > 0) {

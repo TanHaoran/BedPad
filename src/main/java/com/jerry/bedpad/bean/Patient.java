@@ -1,5 +1,8 @@
 package com.jerry.bedpad.bean;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Jerry on 2016/8/4.
  */
@@ -19,6 +22,8 @@ public class Patient {
     private String event;
     private String history;
     private String food;
+
+    private List<Note> noteList = new ArrayList<>();
 
     public String getId() {
         return id;
@@ -138,5 +143,13 @@ public class Patient {
 
     public void setFood(String food) {
         this.food = food;
+    }
+
+    public List<Note> getNoteList() {
+        return noteList;
+    }
+
+    public void setNoteList(List<Note> noteList) {
+        this.noteList = noteList;
     }
 }
