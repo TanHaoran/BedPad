@@ -301,11 +301,26 @@ public class DetailActivity extends AppCompatActivity {
      */
     private void initNoteLayout() {
         if (Constant.PATIENT != null) {
+            // 计算子View的个数
+            int count = 1;
+            String e = Constant.PATIENT.getEvent();
+            if (!TextUtils.isEmpty(e)) {
+                String[] events = e.split("\\|");
+                int length = events.length;
+                count += length;
+            }
+            if (!TextUtils.isEmpty(Constant.PATIENT.getFood())) {
+                count++;
+            }
+            if (!JsonUtil.isEmpty(Constant.PATIENT.getNoteList())) {
+                count += Constant.PATIENT.getNoteList().size();
+            }
+            int textSize = mNoteLayout.getHeight() / count - 15 - 15 * 2;
             // 护理等级的添加
             mNoteLayout.removeAllViews();
             TextView levelText = new TextView(this);
             levelText.setText(Constant.PATIENT.getLevel());
-            fillData(levelText, 0xbbf93c3c, true);
+            fillData(levelText, textSize, 0xbbf93c3c, true);
             // 护理事件的添加
             String event = Constant.PATIENT.getEvent();
             if (!TextUtils.isEmpty(event)) {
@@ -315,22 +330,23 @@ public class DetailActivity extends AppCompatActivity {
                     for (int i = 0; i < length; i++) {
                         TextView textView = new TextView(this);
                         textView.setText(events[i]);
-                        fillData(textView, 0xbb00b1ff, false);
+                        fillData(textView, textSize, 0xbb00b1ff, false);
                     }
                 }
             }
             // 饮食板块添加
+
             if (!TextUtils.isEmpty(Constant.PATIENT.getFood())) {
                 TextView foodView = new TextView(this);
                 foodView.setText(Constant.PATIENT.getFood());
-                fillData(foodView, 0xbb00b1ff, false);
+                fillData(foodView, textSize, 0xbb00b1ff, false);
             }
             // 便签内容添加
             if (!JsonUtil.isEmpty(Constant.PATIENT.getNoteList())) {
                 for (Note n : Constant.PATIENT.getNoteList()) {
                     TextView noteView = new TextView(this);
                     noteView.setText(n.getName());
-                    fillData(noteView, Color.parseColor(n.getColor()), false);
+                    fillData(noteView, textSize, Color.parseColor(n.getColor()), false);
                 }
             }
         }
@@ -344,7 +360,7 @@ public class DetailActivity extends AppCompatActivity {
      * @param bgColor 背景颜色
      * @param isFirst 是否是第一个一个元素
      */
-    private void fillData(View v, int bgColor, boolean isFirst) {
+    private void fillData(View v, int textSize, int bgColor, boolean isFirst) {
         v.setBackgroundColor(bgColor);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0);
         lp.weight = 1;
@@ -353,8 +369,8 @@ public class DetailActivity extends AppCompatActivity {
         }
         v.setLayoutParams(lp);
         TextView textView = (TextView) v;
-        textView.setTextSize(44);
-        textView.setTextColor(Color.WHITE);
+        textView.setTextSize(textSize);
+        textView.setTextColor(Color.BLACK);
         textView.setGravity(Gravity.CENTER);
         mNoteLayout.addView(v);
     }
