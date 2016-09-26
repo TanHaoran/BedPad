@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * 默认每60分钟更新一次体温数据
      */
-    private static final int DEFAULT_UPDATE_PATIENT_INFO_TIME = 1 * 60 * 1000;
+    private static final int DEFAULT_UPDATE_PATIENT_INFO_TIME = 60 * 60 * 1000;
 
     /**
      * 定时监听体温线程
@@ -135,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * 默认每10秒更新一次体温数据
      */
-    private static final int DEFAULT_MONITOR = 10 * 1000;
+    private static final int DEFAULT_MONITOR = 15 * 1000;
 
     /**
      * 定时监听体温线程

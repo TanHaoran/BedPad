@@ -91,7 +91,7 @@ public class TcpUtil {
     /**
      * 每隔60s检测连接是否断开
      */
-    private static final int KEEP_ALIVE_TIME_OUT = 60 * 1000;
+    private static final int KEEP_ALIVE_TIME_OUT = 1 * 60 * 1000;
 
     private Context mContext;
 
