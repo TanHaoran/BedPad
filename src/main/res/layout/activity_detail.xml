@@ -498,7 +498,7 @@
                 android:src="@drawable/bluetooth_icon" />
 
 
-            <com.jerry.bedpad.view.RippleBackground
+            <com.jerry.bedpad.com.jerry.roundindicator.view.RippleBackground
                 android:id="@+id/ripple"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -529,7 +529,7 @@
                     android:textSize="16sp"
                     android:visibility="invisible" />
 
-            </com.jerry.bedpad.view.RippleBackground>
+            </com.jerry.bedpad.com.jerry.roundindicator.view.RippleBackground>
 
 
         </RelativeLayout>
@@ -688,13 +688,13 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
-                    <com.jerry.bedpad.view.MessageView
+                    <com.jerry.bedpad.com.jerry.roundindicator.view.MessageView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         jerry:message_text="请注意饮食"
                         jerry:round_color="#ffe312" />
 
-                    <com.jerry.bedpad.view.MessageView
+                    <com.jerry.bedpad.com.jerry.roundindicator.view.MessageView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         jerry:message_color="@color/choose_title"

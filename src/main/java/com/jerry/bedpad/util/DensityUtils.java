@@ -107,12 +107,12 @@ public class DensityUtils {
 //    /**
 //     * 获取屏幕亮度
 //     *
-//     * @param activity
+//     * @param com.jerry.roundindicator.activity
 //     * @return
 //     */
-//    public static int getScreenBrightness(Activity activity) {
+//    public static int getScreenBrightness(Activity com.jerry.roundindicator.activity) {
 //        int value = 0;
-//        ContentResolver cr = activity.getContentResolver();
+//        ContentResolver cr = com.jerry.roundindicator.activity.getContentResolver();
 //        try {
 //            value = Settings.System.getInt(cr, Settings.System.SCREEN_BRIGHTNESS);
 //        } catch (Settings.SettingNotFoundException e) {
@@ -126,9 +126,9 @@ public class DensityUtils {
 //     */
 //    public static void setBrightness(Context context, int value) {
 //
-//        WindowManager.LayoutParams params = activity.getWindow().getAttributes();
+//        WindowManager.LayoutParams params = com.jerry.roundindicator.activity.getWindow().getAttributes();
 //        params.screenBrightness = value / 255f;
-//        activity.getWindow().setAttributes(params);
+//        com.jerry.roundindicator.activity.getWindow().setAttributes(params);
 //        Settings.System.putInt(context.getContentResolver(), Settings.System.SCREEN_BRIGHTNESS, value);
 //    }
 }

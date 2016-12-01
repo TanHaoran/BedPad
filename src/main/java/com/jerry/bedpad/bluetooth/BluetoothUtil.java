@@ -10,7 +10,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.jerry.bedpad.bean.TemperatureDevice;
 import com.jerry.bedpad.util.L;
@@ -110,6 +109,24 @@ public class BluetoothUtil extends BluetoothProtocol {
     }
 
     /**
+     * 将16进制byte数组转成字符串
+     *
+     * @param buffer 字节数组
+     * @param length 有效长度
+     */
+    public String printHexToString(byte[] buffer, int length) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < length; i++) {
+            String hex = Integer.toHexString(buffer[i] & 0xFF);
+            if (hex.length() == 1) {
+                hex = '0' + hex;
+            }
+            sb.append(hex.toUpperCase() + " ");
+        }
+        return sb.toString();
+    }
+
+    /**
      * 扫描蓝牙设备的回调函数
      */
     @SuppressLint("NewApi")
@@ -117,12 +134,18 @@ public class BluetoothUtil extends BluetoothProtocol {
         @Override
         public void onLeScan(BluetoothDevice bluetoothDevice, int i, byte[] receiveBytes) {
 
+//          L.i("发现设备，地址：" + bluetoothDevice.getAddress());
 
             bluetoothDevice.getUuids();
 
             //如果不是本商家的设备，则直接返回
             if (!equipmentFilter(receiveBytes)) {
 //                L.i("不是彩虹蛋蛋设备");
+                if (bluetoothDevice.getAddress().startsWith("D0")) {
+                    L.i("发现设备，地址：" + bluetoothDevice.getAddress());
+                    String s = printHexToString(receiveBytes, receiveBytes.length);
+                    L.i(s);
+                }
                 return;
             }
 
