@@ -1,5 +1,6 @@
 package com.jerry.bedpad.activity;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -342,14 +343,27 @@ public class MainActivity extends AppCompatActivity {
      * 开始搜索蓝牙设备
      */
     private void startMonitor() {
-        // 如果蓝牙准备好就开始监测
-        if (BluetoothUtil.ready(this)) {
-            // 开始搜索蓝牙设备
-            mHandler.removeCallbacks(mMonitor);
-            mHandler.post(mMonitor);
-            isBluetoothStart = true;
-        }
 
+
+        BaseActivity.requestRuntimePermission(new String[]{Manifest.permission.BLUETOOTH}, new PermissionListener() {
+            @Override
+            public void onGranted() {
+
+                // 如果蓝牙准备好就开始监测
+                if (BluetoothUtil.ready(MainActivity.this)) {
+                    // 开始搜索蓝牙设备
+                    mHandler.removeCallbacks(mMonitor);
+                    mHandler.post(mMonitor);
+                    isBluetoothStart = true;
+                }
+
+            }
+
+            @Override
+            public void onDenied(List<String> deniedPermission) {
+
+            }
+        });
     }
 
 
@@ -432,7 +446,7 @@ public class MainActivity extends AppCompatActivity {
         }
         // 便签的构造
         if (!JsonUtil.isEmpty(patient.getNoteList())) {
-            for(Note n:patient.getNoteList()) {
+            for (Note n : patient.getNoteList()) {
                 NoteView noteView = new NoteView(this);
                 noteView.setFromColor(Color.parseColor(n.getColor()));
                 noteView.setToColor(Color.parseColor(n.getColor()));

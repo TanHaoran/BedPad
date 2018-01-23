@@ -11,9 +11,13 @@ import android.content.Intent;
 import android.os.Build;
 import android.text.TextUtils;
 
+import com.jerry.bedpad.activity.BaseActivity;
+import com.jerry.bedpad.activity.PermissionListener;
 import com.jerry.bedpad.bean.TemperatureDevice;
 import com.jerry.bedpad.util.L;
 import com.jerry.bedpad.util.T;
+
+import java.util.List;
 
 
 public class BluetoothUtil extends BluetoothProtocol {
